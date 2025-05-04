@@ -23,10 +23,10 @@ const estilosDetalle = StyleSheet.create({
     },
     tarjeta: {
       borderWidth: 2,
-      height:'140%',
+      height:'120%',
       borderColor: Colores.grisOscuro,
       padding: 12,
-      marginTop:20,
+      marginTop:5,
     },
     imagenSimulada: {
       height: 220,
