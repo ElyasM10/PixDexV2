@@ -1,10 +1,8 @@
 import React from 'react';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../navegacion/Navigator';
+import { useRouter } from 'expo-router';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
-
 
 const datos = {
   series: [
@@ -25,20 +23,23 @@ const datos = {
 };
 
 const Tarjeta = ({ titulo, generos }: { titulo: string; generos: string[] }) => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
+  const router = useRouter();
   const descripcion = 'Descripción de ejemplo para ' + titulo;
-  const tipo = 'TV'; 
+  const tipo = 'TV';
 
   return (
     <TouchableOpacity
       style={estilosHome.tarjeta}
       onPress={() =>
-        navigation.navigate('Detalle', {
-          titulo,
-          generos,
-          descripcion,
-          tipo,
+        router.push({
+          pathname: '/detalle/[slug]',
+          params: {
+            slug: titulo,
+            titulo,
+            generos: JSON.stringify(generos),
+            descripcion,
+            tipo,
+          },
         })
       }
     >
@@ -52,7 +53,6 @@ const Tarjeta = ({ titulo, generos }: { titulo: string; generos: string[] }) => 
     </TouchableOpacity>
   );
 };
-
 
 const Seccion = ({ titulo, elementos }: { titulo: string; elementos: any[] }) => (
   <View style={estilosHome.seccion}>
@@ -69,7 +69,7 @@ const Home = () => {
   return (
     <SafeAreaView style={estilosHome.contenedor}>
       <ScrollView>
-      <Navbar />
+        <Navbar />
         <Seccion titulo="Series" elementos={datos.series} />
         <Seccion titulo="Películas" elementos={datos.peliculas} />
         <Seccion titulo="Anime" elementos={datos.anime} />

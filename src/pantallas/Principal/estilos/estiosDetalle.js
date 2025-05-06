@@ -81,7 +81,6 @@ const estilosDetalle = StyleSheet.create({
       fontSize: 10,
       paddingHorizontal: 6,
       paddingVertical: 4,
-      borderRadius: 4,
       marginRight: 6,
       marginBottom: 6,
     },

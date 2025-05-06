@@ -64,7 +64,6 @@ const estilosHome = StyleSheet.create({
     marginRight: 4,
     backgroundColor: Colores.grisOscuro,
     paddingHorizontal: 4,
-    borderRadius: 4,
     marginBottom: 2,
   },
 });

@@ -1,13 +1,21 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import estilosDetalle from './estilos/estiosDetalle';
+import { useRouter } from 'expo-router'; 
 
-const Detalle = ({ route, navigation }: any) => {
-  const { titulo, descripcion, generos, tipo } = route.params;
+type DetalleProps = {
+  titulo: string;
+  descripcion: string;
+  generos: string[];
+  tipo: string;
+};
 
+const Detalle: React.FC<DetalleProps> = ({ titulo, descripcion, generos, tipo }) => {
+  const router = useRouter(); 
+  
   return (
     <ScrollView style={estilosDetalle.contenedor}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={estilosDetalle.botonVolver}>
+      <TouchableOpacity onPress={() => router.back()} style={estilosDetalle.botonVolver}>
         <Text style={estilosDetalle.textoBotonVolver}>BACK</Text>
       </TouchableOpacity>
 
@@ -24,9 +32,13 @@ const Detalle = ({ route, navigation }: any) => {
 
         <Text style={estilosDetalle.subtitulo}>Genres</Text>
         <View style={estilosDetalle.generos}>
-          {generos.map((g: string, i: number) => (
-            <Text key={i} style={estilosDetalle.genero}>{g}</Text>
-          ))}
+          {Array.isArray(generos) ? (
+            generos.map((g, i) => (
+              <Text key={i} style={estilosDetalle.genero}>{g}</Text>
+            ))
+          ) : (
+            <Text style={estilosDetalle.genero}>No genres available</Text>
+          )}
         </View>
       </View>
     </ScrollView>
