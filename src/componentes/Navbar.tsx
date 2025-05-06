@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Octicons from '@expo/vector-icons/Octicons';
 import Colores from '../../assets/colors/colores';
+
 
 const Navbar: React.FC = () => {
   return (
@@ -8,8 +10,9 @@ const Navbar: React.FC = () => {
       {/* Encabezado */}
       <View style={estilos.encabezado}>
         <Text style={estilos.logoTexto}>Pixdex</Text>
-        <TouchableOpacity>
-          <Text style={estilos.botonFiltrar}>FILTRAR</Text>
+        <TouchableOpacity style={estilos.botonFiltrar}>
+          <Octicons name="gear" size={15} color="white" style={{ marginRight: 5 }} />
+          <Text style={estilos.botonFiltrarTexto}>FILTRAR</Text>
         </TouchableOpacity>
       </View>
 
@@ -45,26 +48,36 @@ const estilos = StyleSheet.create({
   },
   logoTexto: {
     fontFamily: 'PressStart2P',
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: 'bold',
     color: Colores.purpura,
     marginLeft: 20,
     marginTop: 40,
   },
   botonFiltrar: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: Colores.purpura,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    fontWeight: 'bold',
-    color: 'white',
-    borderWidth: 2,
-    borderColor: Colores.purpuraClaro,
+    padding: 5,
     marginRight: 20,
     marginTop: 40,
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderTopColor: Colores.purpuraClaro,
+    borderLeftColor: Colores.purpuraClaro,
+    borderRightColor: Colores.purpura,
+    borderBottomColor: Colores.purpura,
+  },
+  botonFiltrarTexto: {
+    fontWeight: 'bold',
+    color: 'white',
     fontFamily: 'PressStart2P',
-    fontSize: 8,
+    fontSize: 10,
     textAlign: 'center',
   },
+  
   filaCajas: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -72,7 +85,7 @@ const estilos = StyleSheet.create({
     marginTop: 10,
   },
   caja1: {
-    padding: 16,
+    padding: 10,
     width: '48%',
     minHeight: 200,
     backgroundColor: Colores.purpura,
@@ -99,14 +112,13 @@ const estilos = StyleSheet.create({
     fontFamily: 'PressStart2P',
     fontSize: 10,
     color: 'white',
-    backgroundColor: Colores.purpuraClaro,
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 4,
-    alignSelf: 'center',
+    alignSelf: 'flex-end',
   },
   caja2: {
-    padding: 16,
+    padding: 10,
     width: '48%',
     minHeight: 200,
     backgroundColor: '#5FD068',
@@ -133,11 +145,10 @@ const estilos = StyleSheet.create({
     fontFamily: 'PressStart2P',
     fontSize: 10,
     color: 'white',
-    backgroundColor: '#6BE58D',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 4,
-    alignSelf: 'center',
+    alignSelf: 'flex-end',
   },
 });
 

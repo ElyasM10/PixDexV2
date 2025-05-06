@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../navegacion/Navigator';
 import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
-import Navbar from '../Navbar';
+import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
 
 
@@ -68,8 +68,8 @@ const Seccion = ({ titulo, elementos }: { titulo: string; elementos: any[] }) =>
 const Home = () => {
   return (
     <SafeAreaView style={estilosHome.contenedor}>
-      <Navbar />
       <ScrollView>
+      <Navbar />
         <Seccion titulo="Series" elementos={datos.series} />
         <Seccion titulo="Películas" elementos={datos.peliculas} />
         <Seccion titulo="Anime" elementos={datos.anime} />
