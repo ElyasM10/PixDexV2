@@ -6,13 +6,16 @@ import { useRouter } from 'expo-router';
 type DetalleProps = {
   titulo: string;
   descripcion: string;
-  generos: string[];
+  generos: string[] | string;  // me genera conflctos por eso quedo asi
   tipo: string;
 };
 
 const Detalle: React.FC<DetalleProps> = ({ titulo, descripcion, generos, tipo }) => {
   const router = useRouter(); 
-  
+
+  // nesecario para mapear
+  const generosArray = typeof generos === 'string' ? generos.split(',') : generos;
+
   return (
     <ScrollView style={estilosDetalle.contenedor}>
       <TouchableOpacity onPress={() => router.back()} style={estilosDetalle.botonVolver}>
@@ -32,9 +35,9 @@ const Detalle: React.FC<DetalleProps> = ({ titulo, descripcion, generos, tipo })
 
         <Text style={estilosDetalle.subtitulo}>Genres</Text>
         <View style={estilosDetalle.generos}>
-          {Array.isArray(generos) ? (
-            generos.map((g, i) => (
-              <Text key={i} style={estilosDetalle.genero}>{g}</Text>
+          {generosArray.length > 0 ? (
+            generosArray.map((g, i) => (
+              <Text key={i} style={estilosDetalle.genero}>{g.trim()}</Text> //evita los espacios indeaseados
             ))
           ) : (
             <Text style={estilosDetalle.genero}>No genres available</Text>

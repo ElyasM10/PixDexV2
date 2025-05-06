@@ -41,10 +41,17 @@ const estilosHome = StyleSheet.create({
   imagenSimulada: {
     width: '111%',           
     height: 180,
-    backgroundColor: Colores.grisOscuro,
+    backgroundColor: Colores.grisClaro,
     marginBottom: 6,
     marginLeft: -6,
     marginTop:-6,
+    justifyContent: 'center',
+  },
+  textoImagen: {
+    color: Colores.grisOscuro,
+    fontFamily: 'PressStart2P',
+    fontSize: 4,
+    textAlign: 'center',
   },
   titulo: {
     fontFamily: 'PressStart2P',

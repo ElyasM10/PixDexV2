@@ -36,14 +36,16 @@ const Tarjeta = ({ titulo, generos }: { titulo: string; generos: string[] }) => 
           params: {
             slug: titulo,
             titulo,
-            generos: JSON.stringify(generos),
+            generos: generos,
             descripcion,
             tipo,
           },
         })
       }
     >
-      <View style={estilosHome.imagenSimulada} />
+       <View style={estilosHome.imagenSimulada}>
+        <Text style={estilosHome.textoImagen}>{titulo}</Text>
+      </View>
       <Text style={estilosHome.titulo}>{titulo}</Text>
       <View style={estilosHome.generos}>
         {generos.map((genero, i) => (

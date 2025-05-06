@@ -30,13 +30,13 @@ const estilosDetalle = StyleSheet.create({
     },
     imagenSimulada: {
       height: 220,
-      backgroundColor: Colores.grisOscuro,
+      backgroundColor: Colores.grisClaro,
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 16,
     },
     textoImagen: {
-      color: 'white',
+      color: Colores.grisOscuro,
       fontFamily: 'PressStart2P',
       fontSize: 10,
       textAlign: 'center',
