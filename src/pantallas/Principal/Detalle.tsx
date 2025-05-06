@@ -19,7 +19,7 @@ const Detalle: React.FC<DetalleProps> = ({ titulo, descripcion, generos, tipo })
   return (
     <ScrollView style={estilosDetalle.contenedor}>
       <TouchableOpacity onPress={() => router.back()} style={estilosDetalle.botonVolver}>
-        <Text style={estilosDetalle.textoBotonVolver}>BACK</Text>
+      <Text style={estilosDetalle.textoBotonVolver}>← BACK</Text>
       </TouchableOpacity>
 
       <View style={estilosDetalle.tarjeta}>

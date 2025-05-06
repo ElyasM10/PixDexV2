@@ -30,7 +30,7 @@ const estilosDetalle = StyleSheet.create({
     },
     imagenSimulada: {
       height: 220,
-      backgroundColor: Colores.grisClaro,
+      backgroundColor: Colores.gris,
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 16,
@@ -83,6 +83,7 @@ const estilosDetalle = StyleSheet.create({
       paddingVertical: 4,
       marginRight: 6,
       marginBottom: 6,
+      padding:5,
     },
   });
   export default estilosDetalle;
