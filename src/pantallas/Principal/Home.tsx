@@ -1,80 +1,67 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
+import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
+import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
+import type { ContenidoAudiovisual } from '../../data/contenidosAudiovisuales'; 
 
-const datos = {
-  series: [
-    { titulo: 'Stranger Things', generos: ['Drama', 'Fantasy'] },
-    { titulo: 'Breaking Bad', generos: ['Crime', 'Drama'] },
-    { titulo: 'The Office', generos: ['Comedy'] },
-  ],
-  peliculas: [
-    { titulo: 'Inception', generos: ['Action', 'Adventure'] },
-    { titulo: 'The Shawshank Redemption', generos: ['Drama'] },
-    { titulo: 'The Dark Knight', generos: ['Action', 'Crime'] },
-  ],
-  anime: [
-    { titulo: 'Attack on Titan', generos: ['Action', 'Fantasy'] },
-    { titulo: 'Death Note', generos: ['Mystery', 'Thriller'] },
-    { titulo: 'Naruto', generos: ['Adventure', 'Action'] },
-  ],
-};
-
-const Tarjeta = ({ titulo, generos }: { titulo: string; generos: string[] }) => {
+const Tarjeta = ({ contenido }: { contenido: ContenidoAudiovisual }) => {
   const router = useRouter();
-  const descripcion = 'Descripción de ejemplo para ' + titulo;
-  const tipo = 'TV';
+  const generos = obtenerNombresGeneros(contenido.generos);
+  const tipo = obtenerTipo(contenido.tipoId);
+
+  const handlePress = () => {
+    const id = contenido.id.toString();
+
+    router.push({
+      pathname: '/detalle/[slug]', 
+      params: {
+        id,
+      },
+    });
+  };
 
   return (
-    <TouchableOpacity
-      style={estilosHome.tarjeta}
-      onPress={() =>
-        router.push({
-          pathname: '/detalle/[slug]',
-          params: {
-            slug: titulo,
-            titulo,
-            generos: generos,
-            descripcion,
-            tipo,
-          },
-        })
-      }
-    >
-       <View style={estilosHome.imagenSimulada}>
-        <Text style={estilosHome.textoImagen}>{titulo}</Text>
+    <TouchableOpacity style={estilosHome.tarjeta} onPress={handlePress}>
+      <View style={estilosHome.imagenSimulada}>
+        <Text style={estilosHome.textoImagen}>{contenido.nombre}</Text>
       </View>
-      <Text style={estilosHome.titulo}>{titulo}</Text>
+      <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
       <View style={estilosHome.generos}>
-        {generos.map((genero, i) => (
-          <Text key={i} style={estilosHome.genero}>{genero}</Text>
+        {generos.map((g, i) => (
+          <Text key={i} style={estilosHome.genero}>{g}</Text>
         ))}
       </View>
     </TouchableOpacity>
   );
 };
 
-const Seccion = ({ titulo, elementos }: { titulo: string; elementos: any[] }) => (
-  <View style={estilosHome.seccion}>
-    <Text style={estilosHome.tituloSeccion}>{titulo.toUpperCase()}</Text>
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-      {elementos.map((item, i) => (
-        <Tarjeta key={i} titulo={item.titulo} generos={item.generos} />
-      ))}
-    </ScrollView>
-  </View>
-);
+const Seccion = ({ tipoId }: { tipoId: number }) => {
+  const elementos = contenidosAudiovisuales.filter(c => c.tipoId === tipoId);
+  const titulo = obtenerTipo(tipoId, true); 
+
+  return (
+    <View style={estilosHome.seccion}>
+      <Text style={estilosHome.tituloSeccion}>{titulo.toUpperCase()}</Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {elementos.map((item) => (
+          <Tarjeta key={item.id} contenido={item} />
+        ))}
+      </ScrollView>
+    </View>
+  );
+};
 
 const Home = () => {
   return (
     <SafeAreaView style={estilosHome.contenedor}>
       <ScrollView>
         <Navbar />
-        <Seccion titulo="Series" elementos={datos.series} />
-        <Seccion titulo="Películas" elementos={datos.peliculas} />
-        <Seccion titulo="Anime" elementos={datos.anime} />
+        <Seccion tipoId={1} /> {/* series */}
+        <Seccion tipoId={2} /> {/* películas */}
+        <Seccion tipoId={3} /> {/* animes */}
       </ScrollView>
     </SafeAreaView>
   );
