@@ -7,20 +7,6 @@ const estilosDetalle = StyleSheet.create({
       backgroundColor: Colores.fondo,
       padding: 16,
     },
-    botonVolver: {
-      marginBottom: 12,
-      marginTop:45,
-    },
-    textoBotonVolver: {
-      backgroundColor: Colores.purpura,
-      paddingVertical: 6,
-      paddingHorizontal: 14,
-      color: 'white',
-      fontFamily: 'PressStart2P',
-      fontSize: 10,
-      borderRadius: 6,
-      alignSelf: 'flex-start',
-    },
     tarjeta: {
       borderWidth: 2,
       height:'120%',

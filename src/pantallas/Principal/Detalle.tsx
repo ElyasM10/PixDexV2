@@ -1,16 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text,ScrollView } from 'react-native';
 import estilosDetalle from './estilos/estiosDetalle';
-import { useRouter } from 'expo-router';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
 import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
+import BotonVolver from '../../componentes/BotonVolver';
 
 type DetalleProps = {
   id: string;
 };
 
 const Detalle: React.FC<DetalleProps> = ({ id }) => {
-  const router = useRouter();
   const contenido = contenidosAudiovisuales.find(c => c.id === Number(id));
 
   if (!contenido) {
@@ -26,9 +25,7 @@ const Detalle: React.FC<DetalleProps> = ({ id }) => {
 
   return (
     <ScrollView style={estilosDetalle.contenedor}>
-      <TouchableOpacity onPress={() => router.back()} style={estilosDetalle.botonVolver}>
-        <Text style={estilosDetalle.textoBotonVolver}>← BACK</Text>
-      </TouchableOpacity>
+      <BotonVolver/>
 
       <View style={estilosDetalle.tarjeta}>
         <View style={estilosDetalle.imagenSimulada}>
