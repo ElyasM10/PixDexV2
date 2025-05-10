@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
@@ -45,23 +45,31 @@ const Seccion = ({ tipoId }: { tipoId: number }) => {
   return (
     <View style={estilosHome.seccion}>
       <Text style={estilosHome.tituloSeccion}>{titulo.toUpperCase()}</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {elementos.map((item) => (
-          <Tarjeta key={item.id} contenido={item} />
-        ))}
-      </ScrollView>
+      <FlatList
+        horizontal
+        data={elementos}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Tarjeta contenido={item} />}
+        showsHorizontalScrollIndicator={false}
+      />
     </View>
   );
 };
 
+/* 
+tipoId:
+      1=Series
+      2=Peliculas
+      3=Anime
+*/
 const Home = () => {
   return (
     <SafeAreaView style={estilosHome.contenedor}>
       <ScrollView>
         <Navbar />
-        <Seccion tipoId={1} /> {/* series */}
-        <Seccion tipoId={2} /> {/* películas */}
-        <Seccion tipoId={3} /> {/* animes */}
+        <Seccion tipoId={1}/> 
+        <Seccion tipoId={2}/> 
+        <Seccion tipoId={3}/> 
       </ScrollView>
     </SafeAreaView>
   );

@@ -3,11 +3,14 @@ import { View, Text,ScrollView } from 'react-native';
 import estilosDetalle from './estilos/estiosDetalle';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
 import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
-import BotonVolver from '../../componentes/BotonVolver';
+import EstandarButton from '../../componentes/botonGenerico';
+import { useRouter } from 'expo-router';
 
 type DetalleProps = {
   id: string;
 };
+
+  const router = useRouter();
 
 const Detalle: React.FC<DetalleProps> = ({ id }) => {
   const contenido = contenidosAudiovisuales.find(c => c.id === Number(id));
@@ -25,8 +28,12 @@ const Detalle: React.FC<DetalleProps> = ({ id }) => {
 
   return (
     <ScrollView style={estilosDetalle.contenedor}>
-      <BotonVolver/>
-
+     <EstandarButton
+        titulo="← VOLVER"
+        onPress={() => router.back()}
+        estiloBoton={estilosDetalle.boton}
+        estiloTexto={estilosDetalle.texto}
+      />
       <View style={estilosDetalle.tarjeta}>
         <View style={estilosDetalle.imagenSimulada}>
           <Text style={estilosDetalle.textoImagen}>{contenido.nombre}</Text>

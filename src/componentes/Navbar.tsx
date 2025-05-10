@@ -3,14 +3,20 @@ import { View, Text,StyleSheet } from 'react-native';
 import Colores from '../../assets/colors/colores';
 import CajaDesafio from './CajaDesafio';
 import CajaPixelReveal from './CajaPixelReveal';
-import BotonFiltrar from './BotonFiltrar';
+import EstandarButton from './botonGenerico';
 
 function Navbar() {
   return (
     <View>
       <View style={estilos.encabezado}>
         <Text style={estilos.logoTexto}>Pixdex</Text>
-        <BotonFiltrar/>
+         <EstandarButton
+        titulo="FILTRAR"
+        icono="gear"
+        onPress={() => console.log('')}
+        estiloBoton={estilos.botonFiltrar}
+        estiloTexto={estilos.botonFiltrarTexto}
+      />
       </View>
 
       <View style={estilos.filaCajas}>
@@ -41,6 +47,29 @@ const estilos = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 20,
     marginTop: 10,
+  },
+    botonFiltrar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colores.purpura,
+    padding: 5,
+    marginRight: 20,
+    marginTop: 40,
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderTopColor: Colores.purpuraClaro,
+    borderLeftColor: Colores.purpuraClaro,
+    borderRightColor: Colores.purpura,
+    borderBottomColor: Colores.purpura,
+  },
+  botonFiltrarTexto: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontFamily: 'PressStart2P',
+    fontSize: 10,
+    textAlign: 'center',
   },
 });
 

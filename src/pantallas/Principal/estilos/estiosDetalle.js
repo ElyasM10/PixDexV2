@@ -71,5 +71,19 @@ const estilosDetalle = StyleSheet.create({
       marginBottom: 6,
       padding:5,
     },
+     boton: {
+    marginBottom: 12,
+    marginTop: 45,
+  },
+  texto: {
+    backgroundColor: Colores.purpura,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    color: 'white',
+    fontFamily: 'PressStart2P',
+    fontSize: 10,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
+  },
   });
   export default estilosDetalle;

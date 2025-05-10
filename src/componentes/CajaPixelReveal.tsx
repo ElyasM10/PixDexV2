@@ -35,8 +35,7 @@ const estilos = StyleSheet.create({
     marginBottom: 10,
   },
   descripcion: {
-    fontFamily: 'PressStart2P',
-    fontSize: 10,
+    fontSize: 14,//a 14 para que se vea mejor
     color: 'white',
     textAlign: 'center',
     marginBottom: 10,
