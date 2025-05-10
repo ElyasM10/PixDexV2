@@ -14,12 +14,27 @@ const estilosDetalle = StyleSheet.create({
       padding: 12,
       marginTop:5,
     },
+      contenedorImagen: {
+      position: 'relative',
+      width: '100%',
+      height: 200,
+      marginBottom: 8,
+    },
     imagen: {
       height: 220,
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 16,
       backgroundColor:Colores.gris,
+    },
+        overlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     textoImagen: {
       color: Colores.grisOscuro,
@@ -32,6 +47,7 @@ const estilosDetalle = StyleSheet.create({
       fontSize: 20,
       color: Colores.purpura,
       marginBottom: 6,
+      marginTop:30,
     },
     etiquetaTipo: {
       backgroundColor: Colores.grisOscuro,
@@ -67,7 +83,7 @@ const estilosDetalle = StyleSheet.create({
       fontSize: 10,
       paddingHorizontal: 6,
       paddingVertical: 4,
-      marginRight: 6,
+      marginRight: 7,
       marginBottom: 6,
       padding:5,
     },
@@ -82,7 +98,6 @@ const estilosDetalle = StyleSheet.create({
     color: 'white',
     fontFamily: 'PressStart2P',
     fontSize: 10,
-    borderRadius: 6,
     alignSelf: 'flex-start',
   },
   });

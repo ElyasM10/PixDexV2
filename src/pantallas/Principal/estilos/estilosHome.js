@@ -20,7 +20,7 @@ const estilosHome = StyleSheet.create({
   tituloSeccion: {
     backgroundColor: Colores.purpura,
     color: 'white',
-    fontSize: 9,
+    fontSize: 10,
     fontFamily: 'PressStart2P',
     alignSelf: 'flex-start',
     paddingHorizontal: 10,
@@ -44,6 +44,12 @@ const estilosHome = StyleSheet.create({
     borderRightColor: Colores.purpuraClaro,
     borderBottomColor: Colores.purpuraClaro,
   },
+  contenedorImagen: {
+    position: 'relative',
+    width: '100%',
+    height: 200,
+    marginBottom: 8,
+  },
   imagen: {
     width: '111%',           
     height: 180,
@@ -53,11 +59,28 @@ const estilosHome = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor:Colores.gris,
   },
+    overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+    textoImagen: {
+    color: 'black',
+    fontFamily: 'PressStart2P',
+    fontSize: 7,
+    textAlign: 'center',
+    marginTop:-20,
+  },
   titulo: {
     fontFamily: 'PressStart2P',
     fontSize: 9,
     color: 'white',
-    marginBottom: 4,
+    marginBottom: 3,
+    marginTop:-20
   },
   generos: {
     flexDirection: 'row',

@@ -23,20 +23,27 @@ const Tarjeta = ({ contenido }: { contenido: ContenidoAudiovisual }) => {
     });
   };
 
-  return (
-    <TouchableOpacity style={estilosHome.tarjeta} onPress={handlePress}>
+return (
+  <TouchableOpacity style={estilosHome.tarjeta} onPress={handlePress}>
+    <View style={estilosHome.contenedorImagen}>
       <Image
         source={{ uri: contenido.imageUrl }}
         style={estilosHome.imagen}
       />
-      <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
-      <View style={estilosHome.generos}>
-        {generos.map((g, i) => (
-          <Text key={i} style={estilosHome.genero}>{g}</Text>
-        ))}
+      <View style={estilosHome.overlay}>
+        <Text style={estilosHome.textoImagen}>{contenido.nombre}</Text>
       </View>
-    </TouchableOpacity>
-  );
+    </View>
+
+    <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
+
+    <View style={estilosHome.generos}>
+      {generos.map((g, i) => (
+        <Text key={i} style={estilosHome.genero}>{g}</Text>
+      ))}
+    </View>
+  </TouchableOpacity>
+);
 };
 
 const Seccion = ({ tipoId }: { tipoId: number }) => {

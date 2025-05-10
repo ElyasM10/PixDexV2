@@ -27,7 +27,7 @@ const estilos = StyleSheet.create({
     justifyContent: 'space-between',
   },
   titulo: {
-    fontSize: 12,
+    fontSize: 14,
     color: 'white',
     fontFamily: 'PressStart2P',
     textAlign: 'center',
