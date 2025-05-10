@@ -33,6 +33,7 @@ const estilos = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 20,
+    marginTop:-20,
   },
   logoTexto: {
     fontFamily: 'PressStart2P',
