@@ -51,6 +51,7 @@ const estilosHome = StyleSheet.create({
     marginLeft: -6,
     marginTop:-6,
     justifyContent: 'center',
+    backgroundColor:Colores.gris,
   },
   titulo: {
     fontFamily: 'PressStart2P',

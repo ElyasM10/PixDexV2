@@ -19,6 +19,7 @@ const estilosDetalle = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 16,
+      backgroundColor:Colores.gris,
     },
     textoImagen: {
       color: Colores.grisOscuro,
