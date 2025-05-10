@@ -1,11 +1,11 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
-import { View, Text, SafeAreaView, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+import {View,Text,SafeAreaView, ScrollView,TouchableOpacity, FlatList, Image} from 'react-native';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
 import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
-import type { ContenidoAudiovisual } from '../../data/contenidosAudiovisuales'; 
+import type { ContenidoAudiovisual } from '../../data/contenidosAudiovisuales';
 
 const Tarjeta = ({ contenido }: { contenido: ContenidoAudiovisual }) => {
   const router = useRouter();
@@ -16,7 +16,7 @@ const Tarjeta = ({ contenido }: { contenido: ContenidoAudiovisual }) => {
     const id = contenido.id.toString();
 
     router.push({
-      pathname: '/detalle/[slug]', 
+      pathname: '/detalle/[slug]',
       params: {
         id,
       },
@@ -25,9 +25,10 @@ const Tarjeta = ({ contenido }: { contenido: ContenidoAudiovisual }) => {
 
   return (
     <TouchableOpacity style={estilosHome.tarjeta} onPress={handlePress}>
-      <View style={estilosHome.imagenSimulada}>
-        <Text style={estilosHome.textoImagen}>{contenido.nombre}</Text>
-      </View>
+      <Image
+        source={{ uri: contenido.imageUrl }}
+        style={estilosHome.imagen}
+      />
       <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
       <View style={estilosHome.generos}>
         {generos.map((g, i) => (
@@ -40,7 +41,7 @@ const Tarjeta = ({ contenido }: { contenido: ContenidoAudiovisual }) => {
 
 const Seccion = ({ tipoId }: { tipoId: number }) => {
   const elementos = contenidosAudiovisuales.filter(c => c.tipoId === tipoId);
-  const titulo = obtenerTipo(tipoId, true); 
+  const titulo = obtenerTipo(tipoId, true);
 
   return (
     <View style={estilosHome.seccion}>
@@ -56,20 +57,20 @@ const Seccion = ({ tipoId }: { tipoId: number }) => {
   );
 };
 
-/* 
+/*
 tipoId:
-      1=Series
-      2=Peliculas
-      3=Anime
+      1 = Series
+      2 = Peliculas
+      3 = Anime
 */
 const Home = () => {
   return (
     <SafeAreaView style={estilosHome.contenedor}>
       <ScrollView>
         <Navbar />
-        <Seccion tipoId={1}/> 
-        <Seccion tipoId={2}/> 
-        <Seccion tipoId={3}/> 
+        <Seccion tipoId={1} />
+        <Seccion tipoId={2} />
+        <Seccion tipoId={3} />
       </ScrollView>
     </SafeAreaView>
   );

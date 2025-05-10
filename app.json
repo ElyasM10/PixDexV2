@@ -3,6 +3,7 @@
     "name": "PixDexV2",
     "slug": "PixDexV2",
     "version": "1.0.0",
+    "scheme": "PixDexV2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

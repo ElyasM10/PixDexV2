@@ -28,7 +28,6 @@ const estilos = StyleSheet.create({
   },
   titulo: {
     fontSize: 12,
-    fontWeight: 'bold',
     color: 'white',
     fontFamily: 'PressStart2P',
     textAlign: 'center',

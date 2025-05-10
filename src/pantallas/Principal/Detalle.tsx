@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text,ScrollView } from 'react-native';
+import { View, Text,ScrollView, Image } from 'react-native';
 import estilosDetalle from './estilos/estiosDetalle';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
 import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
@@ -35,9 +35,10 @@ const Detalle: React.FC<DetalleProps> = ({ id }) => {
         estiloTexto={estilosDetalle.texto}
       />
       <View style={estilosDetalle.tarjeta}>
-        <View style={estilosDetalle.imagenSimulada}>
-          <Text style={estilosDetalle.textoImagen}>{contenido.nombre}</Text>
-        </View>
+          <Image
+          source={{ uri: contenido.imageUrl }}
+          style={estilosDetalle.imagen}
+        />
 
         <Text style={estilosDetalle.titulo}>{contenido.nombre}</Text>
 

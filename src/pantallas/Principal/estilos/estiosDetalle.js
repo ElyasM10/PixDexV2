@@ -14,9 +14,8 @@ const estilosDetalle = StyleSheet.create({
       padding: 12,
       marginTop:5,
     },
-    imagenSimulada: {
+    imagen: {
       height: 220,
-      backgroundColor: Colores.gris,
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: 16,

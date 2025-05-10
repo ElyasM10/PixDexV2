@@ -37,7 +37,6 @@ const estilos = StyleSheet.create({
   logoTexto: {
     fontFamily: 'PressStart2P',
     fontSize: 24,
-    fontWeight: 'bold',
     color: Colores.purpura,
     marginLeft: 20,
     marginTop: 40,
@@ -65,7 +64,6 @@ const estilos = StyleSheet.create({
     borderBottomColor: Colores.purpura,
   },
   botonFiltrarTexto: {
-    fontWeight: 'bold',
     color: 'white',
     fontFamily: 'PressStart2P',
     fontSize: 10,
