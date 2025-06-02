@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import estilosDetalle from './estilos/estiosDetalle';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
 import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
-import EstandarButton from '../../componentes/botonGenerico';
+import EstandarButton from '../../componentes/EstandarButton';
 import Colores from '../../../assets/colors/colores';
 import { useRouter } from 'expo-router';
 
@@ -36,12 +36,14 @@ const Detalle: React.FC<DetalleProps> = ({ id }) => {
       <StatusBar barStyle="light-content" backgroundColor={Colores.fondo} />
       
       <ScrollView style={estilosDetalle.contenedor}>
-        <EstandarButton
-          titulo="← VOLVER"
-          onPress={() => router.back()}
-          estiloBoton={estilosDetalle.boton}
-          estiloTexto={estilosDetalle.texto}
-        />
+      <EstandarButton
+      titulo="VOLVER"
+      icono="arrow-left"
+      estiloBoton={estilosDetalle.boton}
+      estiloTexto={estilosDetalle.texto}
+      estiloIcono={{ marginLeft:10}} 
+      onPress={() => router.back()}
+    />
         <View style={estilosDetalle.tarjeta}>
           <View style={estilosDetalle.contenedorImagen}>
             <Image

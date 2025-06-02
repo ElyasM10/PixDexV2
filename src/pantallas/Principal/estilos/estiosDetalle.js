@@ -87,18 +87,22 @@ const estilosDetalle = StyleSheet.create({
       marginBottom: 6,
       padding:5,
     },
-     boton: {
-    marginBottom: 12,
-    marginTop: 45,
-  },
-  texto: {
-    backgroundColor: Colores.purpura,
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    color: 'white',
-    fontFamily: 'PressStart2P',
-    fontSize: 10,
-    alignSelf: 'flex-start',
-  },
+    boton: {
+      backgroundColor: Colores.purpura,
+      marginTop: 20,
+      marginBottom: 12,
+      alignSelf: 'flex-start', 
+      paddingHorizontal: 0, 
+    },
+    texto: {
+      paddingVertical: 6,
+      paddingHorizontal: 14,
+      color: 'white',
+      fontFamily: 'PressStart2P',
+      fontSize: 10,
+      alignSelf: 'flex-start',
+      marginLeft: -12,
+       marginTop: 4, 
+    },
   });
   export default estilosDetalle;

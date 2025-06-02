@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, Text,StyleSheet } from 'react-native';
 import Colores from '../../assets/colors/colores';
-import CajaDesafio from './CajaDesafio';
-import CajaPixelReveal from './CajaPixelReveal';
-import EstandarButton from './botonGenerico';
+import EstandarButton from './EstandarButton';
+import CajaJuego from './CajaJuego';
 
 function Navbar() {
   return (
@@ -20,8 +19,18 @@ function Navbar() {
       </View>
 
       <View style={estilos.filaCajas}>
-        <CajaDesafio />
-        <CajaPixelReveal/>
+      <CajaJuego
+        titulo="Desafío del ahorcado"
+        descripcion="Adivina los títulos letra por letra, ¿Cuántos puedes identificar?"
+        colorFondo={Colores.purpura}
+        onPress={() => console.log('Jugar ahorcado')}
+      />
+         <CajaJuego
+        titulo="Pixel Reveal"
+        descripcion="Identifica títulos desde imágenes pixeleadas, ¡Pon a prueba tu memoria visual!"
+        colorFondo="#5FD068"
+        onPress={() => console.log('Jugar pixel reveal')}
+      />
       </View>
     </View>
   );
