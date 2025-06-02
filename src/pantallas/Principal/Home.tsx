@@ -1,11 +1,14 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
-import {View,Text,SafeAreaView, ScrollView,TouchableOpacity, FlatList, Image} from 'react-native';
+import {View,Text,ScrollView,TouchableOpacity, FlatList, Image,StatusBar} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+//import * as NavigationBar from 'expo-navigation-bar';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
 import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
 import type { ContenidoAudiovisual } from '../../data/contenidosAudiovisuales';
+import Colores from '../../../assets/colors/colores';
 
 const Tarjeta = ({ contenido }: { contenido: ContenidoAudiovisual }) => {
   const router = useRouter();
@@ -72,8 +75,12 @@ tipoId:
 */
 const Home = () => {
   return (
-    <SafeAreaView style={estilosHome.contenedor}>
-      <ScrollView>
+    <SafeAreaView
+      style={estilosHome.contenedor}
+      edges={['top', 'left', 'right', 'bottom']} 
+    >
+      <StatusBar barStyle="light-content" backgroundColor={Colores.fondo} />
+      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <Navbar />
         <Seccion tipoId={1} />
         <Seccion tipoId={2} />
@@ -82,5 +89,4 @@ const Home = () => {
     </SafeAreaView>
   );
 };
-
 export default Home;
