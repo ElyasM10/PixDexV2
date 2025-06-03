@@ -77,9 +77,9 @@ const Home = () => {
   return (
     <SafeAreaView
       style={estilosHome.contenedor}
-      edges={['top', 'left', 'right', 'bottom']} 
+      edges={['top']} 
     >
-      <StatusBar barStyle="light-content" backgroundColor={Colores.fondo} />
+      
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <Navbar />
         <Seccion tipoId={1} />
@@ -90,3 +90,4 @@ const Home = () => {
   );
 };
 export default Home;
+//<StatusBar barStyle="light-content" backgroundColor={Colores.fondo} />
