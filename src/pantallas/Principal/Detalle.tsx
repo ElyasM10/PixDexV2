@@ -7,6 +7,8 @@ import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
 import EstandarButton from '../../componentes/EstandarButton';
 import Colores from '../../../assets/colors/colores';
 import { useRouter } from 'expo-router';
+import ListaGeneros from '../../componentes/ListaGeneros';
+import Etiqueta from '../../componentes/Etiqueta';
 
 type DetalleProps = {
   id: string;
@@ -66,15 +68,9 @@ const Detalle: React.FC<DetalleProps> = ({ id }) => {
           <Text style={estilosDetalle.descripcion}>{contenido.descripcion}</Text>
 
           <Text style={estilosDetalle.subtitulo}>Géneros</Text>
-          <View style={estilosDetalle.generos}>
-            {generosArray.length > 0 ? (
-              generosArray.map((g, i) => (
-                <Text key={i} style={estilosDetalle.genero}>{g}</Text>
-              ))
-            ) : (
-              <Text style={estilosDetalle.genero}>No hay géneros disponibles</Text>
-            )}
-          </View>
+          <ListaGeneros
+        generosIds={contenido.generos}
+      />
         </View>
       </ScrollView>
     </SafeAreaView>

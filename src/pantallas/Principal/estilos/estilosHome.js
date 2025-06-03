@@ -73,7 +73,7 @@ const estilosHome = StyleSheet.create({
     fontFamily: 'PressStart2P',
     fontSize: 7,
     textAlign: 'center',
-    marginTop:-20,
+    marginTop:-17,
   },
   titulo: {
     fontFamily: 'PressStart2P',
@@ -81,20 +81,6 @@ const estilosHome = StyleSheet.create({
     color: 'white',
     marginBottom: 3,
     marginTop:-20
-  },
-  generos: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop:1,
-  },
-  genero: {
-    fontSize: 10,
-    color: 'white',
-    marginRight: 4,
-    backgroundColor: Colores.grisOscuro,
-    paddingHorizontal: 4,
-    marginBottom: 2,
-    padding:5,
   },
 });
 export default estilosHome;

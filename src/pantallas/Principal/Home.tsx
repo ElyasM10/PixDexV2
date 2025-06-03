@@ -4,13 +4,11 @@ import { View,Text, ScrollView, TouchableOpacity, FlatList, Image, StatusBar,} f
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
-import {
-  contenidosAudiovisuales,
-  IContenidoAudiovisual,
-} from '../../data/contenidosAudiovisuales';
+import { contenidosAudiovisuales, IContenidoAudiovisual} from '../../data/contenidosAudiovisuales';
 import { obtenerNombresGeneros } from '../../utils/contenidoUtils';
 import Colores from '../../../assets/colors/colores';
 import { tiposContenidoAudiovisual } from '../../data/tiposContenidoAudiovisual';
+import ListaGeneros from '../../componentes/ListaGeneros';
 
 const Tarjeta = ({ contenido }: { contenido: IContenidoAudiovisual }) => {
   const router = useRouter();
@@ -38,13 +36,7 @@ const Tarjeta = ({ contenido }: { contenido: IContenidoAudiovisual }) => {
 
       <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
 
-      <View style={estilosHome.generos}>
-        {generos.map((g, i) => (
-          <Text key={i} style={estilosHome.genero}>
-            {g}
-          </Text>
-        ))}
-      </View>
+      <ListaGeneros generosIds={contenido.generos} />
     </TouchableOpacity>
   );
 };

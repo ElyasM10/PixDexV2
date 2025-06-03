@@ -73,20 +73,6 @@ const estilosDetalle = StyleSheet.create({
       fontSize: 14,
       marginBottom: 6,
     },
-    generos: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-    },
-    genero: {
-      backgroundColor: Colores.grisOscuro,
-      color: 'white',
-      fontSize: 10,
-      paddingHorizontal: 6,
-      paddingVertical: 4,
-      marginRight: 7,
-      marginBottom: 6,
-      padding:5,
-    },
     boton: {
       backgroundColor: Colores.purpura,
       marginTop: 20,
