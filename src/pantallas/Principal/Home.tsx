@@ -1,61 +1,62 @@
 import React from 'react';
 import { useRouter } from 'expo-router';
-import {View,Text,ScrollView,TouchableOpacity, FlatList, Image,StatusBar} from 'react-native';
+import { View,Text, ScrollView, TouchableOpacity, FlatList, Image, StatusBar,} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-//import * as NavigationBar from 'expo-navigation-bar';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
-import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
-import { obtenerNombresGeneros, obtenerTipo } from '../../utils/contenidoUtils';
-import type { ContenidoAudiovisual } from '../../data/contenidosAudiovisuales';
+import {
+  contenidosAudiovisuales,
+  IContenidoAudiovisual,
+} from '../../data/contenidosAudiovisuales';
+import { obtenerNombresGeneros } from '../../utils/contenidoUtils';
 import Colores from '../../../assets/colors/colores';
+import { tiposContenidoAudiovisual } from '../../data/tiposContenidoAudiovisual';
 
-const Tarjeta = ({ contenido }: { contenido: ContenidoAudiovisual }) => {
+const Tarjeta = ({ contenido }: { contenido: IContenidoAudiovisual }) => {
   const router = useRouter();
   const generos = obtenerNombresGeneros(contenido.generos);
-  const tipo = obtenerTipo(contenido.tipoId);
 
   const handlePress = () => {
     const id = contenido.id.toString();
-
     router.push({
       pathname: '/detalle/[slug]',
-      params: {
-        id,
-      },
+      params: { id },
     });
   };
 
-return (
-  <TouchableOpacity style={estilosHome.tarjeta} onPress={handlePress}>
-    <View style={estilosHome.contenedorImagen}>
-      <Image
-        source={{ uri: contenido.imageUrl }}
-        style={estilosHome.imagen}
-      />
-      <View style={estilosHome.overlay}>
-        <Text style={estilosHome.textoImagen}>{contenido.nombre}</Text>
+  return (
+    <TouchableOpacity style={estilosHome.tarjeta} onPress={handlePress}>
+      <View style={estilosHome.contenedorImagen}>
+        <Image
+          source={{ uri: contenido.imageUrl }}
+          style={estilosHome.imagen}
+        />
+        <View style={estilosHome.overlay}>
+          <Text style={estilosHome.textoImagen}>{contenido.nombre}</Text>
+        </View>
       </View>
-    </View>
 
-    <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
+      <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
 
-    <View style={estilosHome.generos}>
-      {generos.map((g, i) => (
-        <Text key={i} style={estilosHome.genero}>{g}</Text>
-      ))}
-    </View>
-  </TouchableOpacity>
-);
+      <View style={estilosHome.generos}>
+        {generos.map((g, i) => (
+          <Text key={i} style={estilosHome.genero}>
+            {g}
+          </Text>
+        ))}
+      </View>
+    </TouchableOpacity>
+  );
 };
 
 const Seccion = ({ tipoId }: { tipoId: number }) => {
   const elementos = contenidosAudiovisuales.filter(c => c.tipoId === tipoId);
-  const titulo = obtenerTipo(tipoId, true);
+  const tipo = tiposContenidoAudiovisual.find(t => t.id === tipoId);
+  const titulo = tipo ? tipo.plural.toUpperCase() : '';
 
   return (
     <View style={estilosHome.seccion}>
-      <Text style={estilosHome.tituloSeccion}>{titulo.toUpperCase()}</Text>
+      <Text style={estilosHome.tituloSeccion}>{titulo}</Text>
       <FlatList
         horizontal
         data={elementos}
@@ -67,27 +68,17 @@ const Seccion = ({ tipoId }: { tipoId: number }) => {
   );
 };
 
-/*
-tipoId:
-      1 = Series
-      2 = Peliculas
-      3 = Anime
-*/
 const Home = () => {
   return (
-    <SafeAreaView
-      style={estilosHome.contenedor}
-      edges={['top']} 
-    >
-      
+    <SafeAreaView style={estilosHome.contenedor} edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor={Colores.fondo} />
       <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <Navbar />
-        <Seccion tipoId={1} />
-        <Seccion tipoId={2} />
-        <Seccion tipoId={3} />
+        {tiposContenidoAudiovisual.map((tipo) => (
+          <Seccion key={tipo.id} tipoId={tipo.id} />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
 };
 export default Home;
-//<StatusBar barStyle="light-content" backgroundColor={Colores.fondo} />
