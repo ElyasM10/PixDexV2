@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   ScrollView,
 } from 'react-native';
@@ -10,6 +9,7 @@ import { Checkbox } from 'react-native-paper';
 import EstandarModal from './EstandarModal';
 import colores from '../../assets/colors/colores';
 import EstandarButton from './EstandarButton';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 interface Props {
   visible: boolean;
@@ -41,8 +41,10 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
     <EstandarModal visible={visible} onClose={onClose}>
       <View style={styles.modalContainer}>
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+        <View style={styles.titleRow}>
           <Text style={styles.title}>Filter Content</Text>
-
+          <EvilIcons name="close" size={24} color="white" style={styles.closeIcon} />
+        </View>
           <Text style={styles.sectionTitle}>Content Types</Text>
           {contentTypes.map((tipo) => (
             <View key={tipo} style={styles.checkboxRow}>
@@ -112,6 +114,16 @@ const styles = StyleSheet.create({
     fontFamily: 'PressStart2P',
     color: 'white',
     marginBottom: 20,
+  },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between', 
+    marginBottom: 0,
+  },
+  closeIcon: {
+    marginLeft: 10,
+    marginTop:-30,
   },
   sectionTitle: {
     fontSize: 16,
