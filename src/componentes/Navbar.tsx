@@ -1,22 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text,StyleSheet } from 'react-native';
 import Colores from '../../assets/colors/colores';
 import EstandarButton from './EstandarButton';
 import CajaJuego from './CajaJuego';
+import FiltrarContenido from './FiltrarContenido';
 
 function Navbar() {
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View>
       <View style={estilos.encabezado}>
         <Text style={estilos.logoTexto}>Pixdex</Text>
-         <EstandarButton
+        <EstandarButton
         titulo="FILTRAR"
         icono="gear"
-        onPress={() => console.log('')}
+        onPress={() => setModalVisible(true)} 
         estiloBoton={estilos.botonFiltrar}
         estiloTexto={estilos.botonFiltrarTexto}
       />
-      </View>
+   <FiltrarContenido
+      visible={modalVisible}
+      onClose={() => setModalVisible(false)}
+      onApply={() => {
+       
+        console.log('Filtrar');
+      }}
+    />
+    </View>
 
       <View style={estilos.filaCajas}>
       <CajaJuego
