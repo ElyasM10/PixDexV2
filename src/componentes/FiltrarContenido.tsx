@@ -10,6 +10,8 @@ import EstandarModal from './EstandarModal';
 import colores from '../../assets/colors/colores';
 import EstandarButton from './EstandarButton';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
+import { generosContenidoAudiovisual } from '../data/generosContenidoAudiovisual';
+import { tiposContenidoAudiovisual } from '../data/tiposContenidoAudiovisual';
 
 interface Props {
   visible: boolean;
@@ -17,19 +19,22 @@ interface Props {
   onApply: (tipos: string[], generos: string[]) => void;
 }
 
-const contentTypes = ['TV Shows', 'Movies', 'Anime'];
-const genres = [
-  'Action', 'Adventure', 'Animation', 'Comedy', 'Crime', 'Documentary',
-  'Drama', 'Fantasy', 'Horror', 'Mystery', 'Romance', 'Sci-Fi',
-  'Thriller', 'Western', 'Shounen', 'Shoujo', 'Seinen', 'Slice of Life',
-  'Mecha', 'Isekai',
-];
+const contentTypes = tiposContenidoAudiovisual.map(
+  (t) => t.plural.charAt(0).toUpperCase() + t.plural.slice(1)
+);
+const genres = generosContenidoAudiovisual
+  .map((g) => g.nombre.charAt(0).toUpperCase() + g.nombre.slice(1))
+  .sort((a, b) => a.localeCompare(b));
 
 const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
   const [tiposSeleccionados, setTiposSeleccionados] = useState<string[]>([...contentTypes]);
   const [generosSeleccionados, setGenerosSeleccionados] = useState<string[]>([]);
 
-  const toggleSeleccion = (item: string, setSeleccion: React.Dispatch<React.SetStateAction<string[]>>, seleccionActual: string[]) => {
+  const toggleSeleccion = (
+    item: string,
+    setSeleccion: React.Dispatch<React.SetStateAction<string[]>>,
+    seleccionActual: string[]
+  ) => {
     if (seleccionActual.includes(item)) {
       setSeleccion(seleccionActual.filter((i) => i !== item));
     } else {
@@ -41,19 +46,20 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
     <EstandarModal visible={visible} onClose={onClose}>
       <View style={styles.modalContainer}>
         <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
-        <View style={styles.titleRow}>
-          <Text style={styles.title}>Filter Content</Text>
-          <EvilIcons name="close" size={24} color="white" style={styles.closeIcon} />
-        </View>
+          <View style={styles.titleRow}>
+            <Text style={styles.title}>Filter Content</Text>
+            <EvilIcons name="close" size={24} color="white" style={styles.closeIcon} />
+          </View>
+
           <Text style={styles.sectionTitle}>Content Types</Text>
           {contentTypes.map((tipo) => (
             <View key={tipo} style={styles.checkboxRow}>
-          <Checkbox
-        status={tiposSeleccionados.includes(tipo) ? 'checked' : 'unchecked'}
-          onPress={() => toggleSeleccion(tipo, setTiposSeleccionados, tiposSeleccionados)}
-          color={colores.purpuraClaro}
-          uncheckedColor={colores.purpuraClaro}
-        />
+              <Checkbox
+                status={tiposSeleccionados.includes(tipo) ? 'checked' : 'unchecked'}
+                onPress={() => toggleSeleccion(tipo, setTiposSeleccionados, tiposSeleccionados)}
+                color={colores.purpuraClaro}
+                uncheckedColor={colores.purpuraClaro}
+              />
               <Text style={styles.checkboxLabel}>{tipo}</Text>
             </View>
           ))}
@@ -61,7 +67,7 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
           <Text style={styles.sectionTitle}>Genres</Text>
           <View style={styles.genreGrid}>
             {genres.map((genero) => (
-              <View key={genero} style={styles.checkboxRow}>
+              <View key={genero} style={styles.genreItem}>
                 <Checkbox
                   status={generosSeleccionados.includes(genero) ? 'checked' : 'unchecked'}
                   onPress={() => toggleSeleccion(genero, setGenerosSeleccionados, generosSeleccionados)}
@@ -74,32 +80,30 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
           </View>
 
           <View style={styles.buttonsContainer}>
-          <EstandarButton
-            titulo="CANCEL"
-            onPress={onClose}
-            estiloBoton={[styles.button, styles.cancelButton]}
-            estiloTexto={styles.cancelText}
-          />
+            <EstandarButton
+              titulo="CANCEL"
+              onPress={onClose}
+              estiloBoton={[styles.button, styles.cancelButton]}
+              estiloTexto={styles.cancelText}
+            />
 
-          <EstandarButton
-            titulo="APPLY FILTERS"
-            onPress={() => {
-              onApply(tiposSeleccionados, generosSeleccionados);
-              onClose();
-            }}
-            estiloBoton={[styles.button, styles.applyButton]}
-            estiloTexto={styles.applyText}
-          />
-        </View>
+            <EstandarButton
+              titulo="APPLY FILTERS"
+              onPress={() => {
+                onApply(tiposSeleccionados, generosSeleccionados);
+                onClose();
+              }}
+              estiloBoton={[styles.button, styles.applyButton]}
+              estiloTexto={styles.applyText}
+            />
+          </View>
         </ScrollView>
       </View>
     </EstandarModal>
   );
 };
 
-
 export default FiltrarContenido;
-
 
 const styles = StyleSheet.create({
   modalContainer: {
@@ -118,12 +122,12 @@ const styles = StyleSheet.create({
   titleRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between', 
+    justifyContent: 'space-between',
     marginBottom: 0,
   },
   closeIcon: {
     marginLeft: 10,
-    marginTop:-30,
+    marginTop: -20,
   },
   sectionTitle: {
     fontSize: 16,
@@ -134,7 +138,7 @@ const styles = StyleSheet.create({
   checkboxRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 1,
   },
   checkboxLabel: {
     color: 'white',
@@ -144,6 +148,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+  },
+  genreItem: {
+    width: '48%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -162,19 +172,19 @@ const styles = StyleSheet.create({
     borderColor: colores.grisOscuro,
   },
   cancelText: {
-    fontSize:13,
+    fontSize: 13,
     color: 'white',
-    justifyContent:'center',
+    justifyContent: 'center',
     fontFamily: 'PressStart2P',
   },
   applyButton: {
     backgroundColor: colores.purpuraOscuro,
     borderWidth: 2,
     borderColor: colores.verde,
-    justifyContent:'center',
+    justifyContent: 'center',
   },
   applyText: {
-    fontSize:11,
+    fontSize: 11,
     color: 'white',
     fontFamily: 'PressStart2P',
   },

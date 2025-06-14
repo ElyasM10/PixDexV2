@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Colores from '../../assets/colors/colores';
+import EstandarButton from './EstandarButton';
 
 interface CajaJuegoProps {
   titulo: string;
   descripcion: string;
   colorFondo: string;
-  onPress?: () => void;
+   onPress?: () => void;
   textoBoton?: string;
 }
-
 const CajaJuego: React.FC<CajaJuegoProps> = ({
   titulo,
   descripcion,
@@ -21,13 +21,15 @@ const CajaJuego: React.FC<CajaJuegoProps> = ({
     <View style={[estilos.caja, { backgroundColor: colorFondo }]}>
       <Text style={estilos.titulo}>{titulo}</Text>
       <Text style={estilos.descripcion}>{descripcion}</Text>
-      <TouchableOpacity onPress={onPress}>
-        <Text style={estilos.boton}>{textoBoton}</Text>
-      </TouchableOpacity>
+      <EstandarButton
+        titulo={textoBoton}
+        onPress={onPress}
+        estiloBoton={estilos.boton}
+        estiloTexto={estilos.textoBoton}
+      />
     </View>
   );
 };
-
 const estilos = StyleSheet.create({
   caja: {
     padding: 10,
@@ -50,14 +52,16 @@ const estilos = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
   },
-  boton: {
-    fontFamily: 'PressStart2P',
-    fontSize: 10,
+    boton: {
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  textoBoton: {
     color: 'white',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 4,
-    alignSelf: 'flex-end',
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginLeft:90,
   },
 });
 

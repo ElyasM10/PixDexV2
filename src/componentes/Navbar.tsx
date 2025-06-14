@@ -4,10 +4,18 @@ import Colores from '../../assets/colors/colores';
 import EstandarButton from './EstandarButton';
 import CajaJuego from './CajaJuego';
 import FiltrarContenido from './FiltrarContenido';
+import { useRouter } from 'expo-router';
 
 function Navbar() {
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  const router = useRouter();
+   
+  const handlePress = () => {
+  console.log('Navegando a HangmanChallenge...');
+  router.push('/hangman-challenge/[hangmanSlug]'); 
+};
 
   return (
     <View>
@@ -30,20 +38,21 @@ function Navbar() {
     />
     </View>
 
-      <View style={estilos.filaCajas}>
-      <CajaJuego
-        titulo="Desafío del ahorcado"
-        descripcion="Adivina los títulos letra por letra, ¿Cuántos puedes identificar?"
-        colorFondo={Colores.purpura}
-        onPress={() => console.log('Jugar ahorcado')}
-      />
-         <CajaJuego
-        titulo="Pixel Reveal"
-        descripcion="Identifica títulos desde imágenes pixeleadas, ¡Pon a prueba tu memoria visual!"
-        colorFondo="#5FD068"
-        onPress={() => console.log('Jugar pixel reveal')}
-      />
-      </View>
+     <View style={estilos.filaCajas}>
+  <CajaJuego
+    titulo="Desafío del ahorcado"
+    descripcion="Adivina los títulos letra por letra, ¿Cuántos puedes identificar?"
+    colorFondo={Colores.purpura}
+    onPress={handlePress}
+  />
+
+  <CajaJuego
+    titulo="Pixel Reveal"
+    descripcion="Identifica títulos desde imágenes pixeleadas, ¡Pon a prueba tu memoria visual!"
+    colorFondo={Colores.verde}
+    onPress={() => console.log('Jugar pixel reveal')}
+  />
+</View>
     </View>
   );
 }
@@ -90,6 +99,16 @@ const estilos = StyleSheet.create({
     fontFamily: 'PressStart2P',
     fontSize: 10,
     textAlign: 'center',
+  },
+    boton: {
+    paddingVertical: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  textoBoton: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 });
 
