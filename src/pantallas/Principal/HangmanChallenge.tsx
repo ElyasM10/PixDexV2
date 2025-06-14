@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import colores from '../../../assets/colors/colores';
 import { EstandarButton } from '../../componentes/EstandarButton';
 import { useRouter } from 'expo-router';
+import ModalNombreJugador from '../../componentes/NombreJugador';
 
 export default function HangmanChallenge() {
   const router = useRouter();
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [nombreJugador, setNombreJugador] = useState('');
 
+const handlePress = () => {
+  if (!nombreJugador.trim()) return;
+
+  console.log("Navegando a pantalla-juego con:", nombreJugador); 
+
+  router.push({ 
+    pathname: '/pantalla-juego/[nombreJugador]',
+    params: { nombreJugador },
+  });
+};
   return (
     <View style={estilos.contenedor}>
       {/* Botón VOLVER */}
@@ -31,13 +44,25 @@ export default function HangmanChallenge() {
           Tenés 5 vidas. ¿Podés lograr la mejor puntuación?
         </Text>
 
-        {/* Botón COMENZAR JUEGO */}
-        <EstandarButton
-          titulo="Comenzar Juego"
-          onPress={() => console.log('Comenzar juego')}
-          estiloBoton={estilos.botonComenzar}
-          estiloTexto={estilos.textoBotonComenzar}
-        />
+  {/* Botón COMENZAR JUEGO */}
+      <EstandarButton
+        titulo="Comenzar Juego"
+        onPress={() => setMostrarModal(true)} 
+        estiloBoton={estilos.botonComenzar}
+        estiloTexto={estilos.textoBotonComenzar}
+      />
+
+      {/* Modal para ingresar nombre del jugador */}
+          <ModalNombreJugador
+        visible={mostrarModal}
+        onClose={() => setMostrarModal(false)}
+        onConfirm={(nombre) => {
+          setNombreJugador(nombre);
+          setMostrarModal(false);
+          handlePress(); 
+        }}
+      />
+
       </View>
     </View>
   );

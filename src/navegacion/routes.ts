@@ -4,4 +4,5 @@ export const ROUTES: Record<string, Href> = {
   HOME: "/",
   DETALLE: "/detalle/",
   HANGMANCHALLENGE:"/hangman-challenge",
+  PANTALLAJUEGO:"/pantalla-juego",
 };

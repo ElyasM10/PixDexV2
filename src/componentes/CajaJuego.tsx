@@ -59,8 +59,8 @@ const estilos = StyleSheet.create({
   },
   textoBoton: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 14,
+    fontFamily: 'PressStart2P',
+    fontSize: 10,
     marginLeft:90,
   },
 });
