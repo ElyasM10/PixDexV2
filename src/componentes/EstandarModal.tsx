@@ -5,6 +5,9 @@ import {
   View,
   StyleProp,
   ViewStyle,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from 'react-native';
 
 interface EstandarModalProps {
@@ -22,12 +25,6 @@ const EstandarModal: React.FC<EstandarModalProps> = ({
   containerStyle,
   dismissOnTouchOutside = true,
 }) => {
-  const content = (
-    <View style={[{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }, containerStyle]}>
-      {children}
-    </View>
-  );
-
   return (
     <Modal
       visible={visible}
@@ -35,16 +32,46 @@ const EstandarModal: React.FC<EstandarModalProps> = ({
       transparent
       onRequestClose={onClose}
     >
-      {dismissOnTouchOutside ? (
-        <TouchableWithoutFeedback onPress={onClose}>
-          {content}
-        </TouchableWithoutFeedback>
-      ) : (
-        content
-      )}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (dismissOnTouchOutside) {
+            Keyboard.dismiss();
+            onClose();
+          }
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <TouchableWithoutFeedback onPress={() => {}}>
+            <KeyboardAvoidingView
+              behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+              style={{
+                width: '90%',
+                maxWidth: 400,
+              }}
+            >
+              <View
+                style={[
+                  {
+                    padding: 20,
+                  },
+                  containerStyle,
+                ]}
+              >
+                {children}
+              </View>
+            </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
 
 export default EstandarModal;
-
