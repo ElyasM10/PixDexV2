@@ -27,7 +27,7 @@ const genres = generosContenidoAudiovisual
   .sort((a, b) => a.localeCompare(b));
 
 const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
-  const [tiposSeleccionados, setTiposSeleccionados] = useState<string[]>([...contentTypes]);
+  const [tiposSeleccionados, setTiposSeleccionados] = useState<string[]>([]);
   const [generosSeleccionados, setGenerosSeleccionados] = useState<string[]>([]);
 
   const toggleSeleccion = (
@@ -45,10 +45,12 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
   return (
     <EstandarModal visible={visible} onClose={onClose}>
       <View style={styles.modalContainer}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+      <ScrollView
+          showsVerticalScrollIndicator={true}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        >
           <View style={styles.titleRow}>
-            <Text style={styles.title}>Filter Content</Text>
-            <EvilIcons name="close" size={24} color="white" style={styles.closeIcon} />
+            <Text style={styles.title}>Filtrar Contenido</Text>
           </View>
 
           <Text style={styles.sectionTitle}>Content Types</Text>
@@ -81,14 +83,14 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
 
           <View style={styles.buttonsContainer}>
             <EstandarButton
-              titulo="CANCEL"
+              titulo="CANCELAR"
               onPress={onClose}
               estiloBoton={[styles.button, styles.cancelButton]}
               estiloTexto={styles.cancelText}
             />
 
             <EstandarButton
-              titulo="APPLY FILTERS"
+              titulo={"APLICAR\nFILTROS"}
               onPress={() => {
                 onApply(tiposSeleccionados, generosSeleccionados);
                 onClose();
@@ -112,7 +114,10 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '90%',
     maxHeight: '90%',
-  },
+    justifyContent: 'center',
+    marginLeft:20,
+    marginTop:50,
+  },  
   title: {
     fontSize: 20,
     fontFamily: 'PressStart2P',
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
   },
   closeIcon: {
     marginLeft: 10,
-    marginTop: -20,
+    marginTop: 0,
   },
   sectionTitle: {
     fontSize: 16,
@@ -176,16 +181,22 @@ const styles = StyleSheet.create({
     color: 'white',
     justifyContent: 'center',
     fontFamily: 'PressStart2P',
+    marginTop:6,
   },
   applyButton: {
     backgroundColor: colores.purpuraOscuro,
     borderWidth: 2,
     borderColor: colores.verde,
     justifyContent: 'center',
+    alignItems: 'center', 
   },
   applyText: {
     fontSize: 11,
     color: 'white',
     fontFamily: 'PressStart2P',
+    textAlign: 'center',    
+  },
+  closeIconTouchable: {
+    padding: 8,
   },
 });

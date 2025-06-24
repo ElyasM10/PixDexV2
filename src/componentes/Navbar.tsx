@@ -5,54 +5,52 @@ import EstandarButton from './EstandarButton';
 import CajaJuego from './CajaJuego';
 import FiltrarContenido from './FiltrarContenido';
 import { useRouter } from 'expo-router';
+interface NavbarProps {
+  onFiltrarPress: () => void;
+  modalVisible: boolean;
+  onClose: () => void;
+  onApply: (tipos: string[], generos: string[]) => void;
+}
 
-function Navbar() {
-
-  const [modalVisible, setModalVisible] = useState(false);
-
+function Navbar({ onFiltrarPress, modalVisible, onClose, onApply }: NavbarProps) {
   const router = useRouter();
-   
+
   const handlePress = () => {
-  console.log('Navegando a HangmanChallenge...');
-  router.push('/hangman-challenge/[hangmanSlug]'); 
-};
+    router.push('/hangman-challenge/[hangmanSlug]');
+  };
 
   return (
     <View>
       <View style={estilos.encabezado}>
         <Text style={estilos.logoTexto}>Pixdex</Text>
         <EstandarButton
-        titulo="FILTRAR"
-        icono="gear"
-        onPress={() => setModalVisible(true)} 
-        estiloBoton={estilos.botonFiltrar}
-        estiloTexto={estilos.botonFiltrarTexto}
-      />
-   <FiltrarContenido
-      visible={modalVisible}
-      onClose={() => setModalVisible(false)}
-      onApply={() => {
-       
-        console.log('Filtrar');
-      }}
-    />
-    </View>
+          titulo="FILTRAR"
+          icono="gear"
+          onPress={onFiltrarPress}
+          estiloBoton={estilos.botonFiltrar}
+          estiloTexto={estilos.botonFiltrarTexto}
+        />
+        <FiltrarContenido
+          visible={modalVisible}
+          onClose={onClose}
+          onApply={onApply}
+        />
+      </View>
 
-     <View style={estilos.filaCajas}>
-  <CajaJuego
-    titulo="Desafío del ahorcado"
-    descripcion="Adivina los títulos letra por letra, ¿Cuántos puedes identificar?"
-    colorFondo={Colores.purpura}
-    onPress={handlePress}
-  />
-
-  <CajaJuego
-    titulo="Pixel Reveal"
-    descripcion="Identifica títulos desde imágenes pixeleadas, ¡Pon a prueba tu memoria visual!"
-    colorFondo={Colores.verde}
-    onPress={() => console.log('Jugar pixel reveal')}
-  />
-</View>
+      <View style={estilos.filaCajas}>
+        <CajaJuego
+          titulo="Desafío del ahorcado"
+          descripcion="Adivina los títulos letra por letra, ¿Cuántos puedes identificar?"
+          colorFondo={Colores.purpura}
+          onPress={handlePress}
+        />
+        <CajaJuego
+          titulo="Pixel Reveal"
+          descripcion="Identifica títulos desde imágenes pixeleadas, ¡Pon a prueba tu memoria visual!"
+          colorFondo={Colores.verde}
+          onPress={() => console.log('Jugar pixel reveal')}
+        />
+      </View>
     </View>
   );
 }
