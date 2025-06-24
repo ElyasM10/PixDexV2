@@ -10,16 +10,18 @@ export default function HangmanChallenge() {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [nombreJugador, setNombreJugador] = useState('');
 
-const handlePress = () => {
-  if (!nombreJugador.trim()) return;
+  const handlePress = () => {
+    const nombre = 'Elias'; // nombre hardcodeado
+    setNombreJugador(nombre);
 
-  console.log("Navegando a pantalla-juego con:", nombreJugador); 
+    console.log("Navegando a pantalla-juego con:", nombre);
 
-  router.push({ 
-    pathname: '/pantalla-juego/[nombreJugador]',
-    params: { nombreJugador },
-  });
-};
+    router.push({
+      pathname: '/pantalla-juego/[nombreJugador]',
+      params: { nombreJugador: nombre },
+    });
+  };
+
   return (
     <View style={estilos.contenedor}>
       {/* Botón VOLVER */}
@@ -45,12 +47,12 @@ const handlePress = () => {
         </Text>
 
   {/* Botón COMENZAR JUEGO */}
-      <EstandarButton
-        titulo="Comenzar Juego"
-        onPress={() => setMostrarModal(true)} 
-        estiloBoton={estilos.botonComenzar}
-        estiloTexto={estilos.textoBotonComenzar}
-      />
+       <EstandarButton
+          titulo="Comenzar Juego"
+          onPress={handlePress}
+          estiloBoton={estilos.botonComenzar}
+          estiloTexto={estilos.textoBotonComenzar}
+        />
 
       {/* Modal para ingresar nombre del jugador */}
           <ModalNombreJugador

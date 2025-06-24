@@ -13,15 +13,20 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
 import { contenidosAudiovisuales, IContenidoAudiovisual } from '../../data/contenidosAudiovisuales';
-import { obtenerNombresGeneros } from '../../utils/contenidoUtils';
 import Colores from '../../../assets/colors/colores';
 import { tiposContenidoAudiovisual } from '../../data/tiposContenidoAudiovisual';
 import { generosContenidoAudiovisual } from '../../data/generosContenidoAudiovisual';
-import ListaGeneros from '../../componentes/ListaGeneros';
-
+import Etiqueta from '../../componentes/Etiqueta';
 const Tarjeta = ({ contenido }: { contenido: IContenidoAudiovisual }) => {
   const router = useRouter();
-  const generos = obtenerNombresGeneros(contenido.generos);
+
+  // Convertir los IDs de géneros a sus nombres:
+  const nombresGeneros = contenido.generos
+    .map((idGenero) => {
+      const generoObj = generosContenidoAudiovisual.find((g) => g.id === idGenero);
+      return generoObj ? generoObj.nombre.charAt(0).toUpperCase() + generoObj.nombre.slice(1) : null;
+    })
+    .filter(Boolean) as string[];
 
   const handlePress = () => {
     const id = contenido.id.toString();
@@ -42,7 +47,12 @@ const Tarjeta = ({ contenido }: { contenido: IContenidoAudiovisual }) => {
 
       <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
 
-      <ListaGeneros generosIds={contenido.generos} />
+      {/* Mostrar etiquetas para cada género */}
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 5 }}>
+        {nombresGeneros.map((nombreGenero) => (
+          <Etiqueta key={nombreGenero} texto={nombreGenero} estiloContenedor={{ marginBottom: 4 }} />
+        ))}
+      </View>
     </TouchableOpacity>
   );
 };
@@ -58,7 +68,6 @@ const Seccion = ({
   const tipo = tiposContenidoAudiovisual.find((t) => t.id === tipoId);
   const titulo = tipo ? tipo.plural.toUpperCase() : '';
 
-  // Si no hay contenidos para este tipo, puedes mostrar mensaje o no mostrar nada
   if (elementos.length === 0) {
     return (
       <View style={estilosHome.seccion}>

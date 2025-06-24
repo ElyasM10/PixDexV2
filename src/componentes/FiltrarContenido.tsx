@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import EstandarModal from './EstandarModal';
@@ -45,28 +46,40 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
   return (
     <EstandarModal visible={visible} onClose={onClose}>
       <View style={styles.modalContainer}>
-      <ScrollView
-          showsVerticalScrollIndicator={true}
-          contentContainerStyle={{ paddingBottom: 20 }}
-        >
-          <View style={styles.titleRow}>
+  
+        {/* Header fijo */}
+        <View style={styles.headerContainer}>
+          <View style={styles.titleContainer}>
             <Text style={styles.title}>Filtrar Contenido</Text>
           </View>
-
-          <Text style={styles.sectionTitle}>Content Types</Text>
-          {contentTypes.map((tipo) => (
-            <View key={tipo} style={styles.checkboxRow}>
-              <Checkbox
-                status={tiposSeleccionados.includes(tipo) ? 'checked' : 'unchecked'}
-                onPress={() => toggleSeleccion(tipo, setTiposSeleccionados, tiposSeleccionados)}
-                color={colores.purpuraClaro}
-                uncheckedColor={colores.purpuraClaro}
-              />
-              <Text style={styles.checkboxLabel}>{tipo}</Text>
-            </View>
-          ))}
-
-          <Text style={styles.sectionTitle}>Genres</Text>
+          <View>
+            <TouchableOpacity onPress={onClose} style={styles.closeIconTouchable}>
+              <EvilIcons name="close" size={28} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+  
+        {/* Content Types fijo */}
+        <Text style={styles.sectionTitle}>Tipos de Contenido</Text>
+        {contentTypes.map((tipo) => (
+          <View key={tipo} style={styles.checkboxRow}>
+            <Checkbox
+              status={tiposSeleccionados.includes(tipo) ? 'checked' : 'unchecked'}
+              onPress={() => toggleSeleccion(tipo, setTiposSeleccionados, tiposSeleccionados)}
+              color={colores.purpuraClaro}
+              uncheckedColor={colores.purpuraClaro}
+            />
+            <Text style={styles.checkboxLabel}>{tipo}</Text>
+          </View>
+        ))}
+  
+        {/* Scroll solo para Géneros */}
+        <Text style={styles.sectionTitle}>Generos</Text>
+        <ScrollView
+          style={{ maxHeight: 250 }}
+          showsVerticalScrollIndicator={true}
+          contentContainerStyle={{ paddingBottom: 10 }}
+        >
           <View style={styles.genreGrid}>
             {genres.map((genero) => (
               <View key={genero} style={styles.genreItem}>
@@ -80,26 +93,27 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
               </View>
             ))}
           </View>
-
-          <View style={styles.buttonsContainer}>
-            <EstandarButton
-              titulo="CANCELAR"
-              onPress={onClose}
-              estiloBoton={[styles.button, styles.cancelButton]}
-              estiloTexto={styles.cancelText}
-            />
-
-            <EstandarButton
-              titulo={"APLICAR\nFILTROS"}
-              onPress={() => {
-                onApply(tiposSeleccionados, generosSeleccionados);
-                onClose();
-              }}
-              estiloBoton={[styles.button, styles.applyButton]}
-              estiloTexto={styles.applyText}
-            />
-          </View>
         </ScrollView>
+  
+        {/* Botones fijos abajo */}
+        <View style={styles.buttonsContainer}>
+          <EstandarButton
+            titulo="CANCELAR"
+            onPress={onClose}
+            estiloBoton={[styles.button, styles.cancelButton]}
+            estiloTexto={styles.cancelText}
+          />
+  
+          <EstandarButton
+            titulo={"APLICAR\nFILTROS"}
+            onPress={() => {
+              onApply(tiposSeleccionados, generosSeleccionados);
+              onClose();
+            }}
+            estiloBoton={[styles.button, styles.applyButton]}
+            estiloTexto={styles.applyText}
+          />
+        </View>
       </View>
     </EstandarModal>
   );
@@ -113,26 +127,29 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     width: '90%',
-    maxHeight: '90%',
+    maxHeight: '100%',
     justifyContent: 'center',
-    marginLeft:20,
-    marginTop:50,
-  },  
+    marginLeft: 20,
+    marginTop: 50,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  titleContainer: {
+    flex: 1,
+    paddingRight: 10,
+  },
+  closeIconTouchable: {
+    padding: 8,
+    marginTop:-15,
+  },
   title: {
     fontSize: 20,
     fontFamily: 'PressStart2P',
     color: 'white',
-    marginBottom: 20,
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 0,
-  },
-  closeIcon: {
-    marginLeft: 10,
-    marginTop: 0,
   },
   sectionTitle: {
     fontSize: 16,
@@ -181,22 +198,19 @@ const styles = StyleSheet.create({
     color: 'white',
     justifyContent: 'center',
     fontFamily: 'PressStart2P',
-    marginTop:6,
+    marginTop: 6,
   },
   applyButton: {
     backgroundColor: colores.purpuraOscuro,
     borderWidth: 2,
     borderColor: colores.verde,
     justifyContent: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   applyText: {
     fontSize: 11,
     color: 'white',
     fontFamily: 'PressStart2P',
-    textAlign: 'center',    
-  },
-  closeIconTouchable: {
-    padding: 8,
+    textAlign: 'center',
   },
 });

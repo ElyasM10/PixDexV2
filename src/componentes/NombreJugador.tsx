@@ -19,9 +19,10 @@ const NombreJugador: React.FC<NombreJugadorProps> = ({
   const [nombre, setNombre] = useState('');
 
   const confirmar = () => {
-    if (nombre.trim()) {
-      onConfirm(nombre.trim());
-      setNombre('');
+    const nombreTrim = nombre.trim();
+    if (nombreTrim) {
+      onConfirm(nombreTrim); 
+      setNombre('');        
     }
   };
 

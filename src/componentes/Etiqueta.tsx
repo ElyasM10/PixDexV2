@@ -1,16 +1,17 @@
 import React from 'react';
-import { Text, View, StyleSheet, ViewStyle } from 'react-native';
+import { View, Text, StyleSheet, ViewStyle, TextStyle, StyleProp } from 'react-native';
 import Colores from '../../assets/colors/colores';
 
 interface Props {
   texto: string;
-  estiloContenedor?: ViewStyle;
+  estiloContenedor?: StyleProp<ViewStyle>;
+  estiloTexto?: StyleProp<TextStyle>;
 }
 
-const Etiqueta: React.FC<Props> = ({ texto, estiloContenedor }) => {
+const Etiqueta: React.FC<Props> = ({ texto, estiloContenedor, estiloTexto }) => {
   return (
     <View style={[estilos.etiqueta, estiloContenedor]}>
-      <Text style={[estilos.texto, ]}>{texto}</Text>
+      <Text style={[estilos.texto, estiloTexto]}>{texto}</Text>
     </View>
   );
 };

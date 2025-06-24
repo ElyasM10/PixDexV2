@@ -97,6 +97,7 @@ const estilos = StyleSheet.create({
     fontFamily: 'PressStart2P',
     fontSize: 10,
     textAlign: 'center',
+    marginTop:5,
   },
     boton: {
     paddingVertical: 10,
