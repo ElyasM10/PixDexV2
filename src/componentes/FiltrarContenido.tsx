@@ -124,7 +124,6 @@ export default FiltrarContenido;
 const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: colores.fondo,
-    borderRadius: 10,
     padding: 20,
     width: '90%',
     maxHeight: '100%',
@@ -201,7 +200,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   applyButton: {
-    backgroundColor: colores.purpuraOscuro,
+    backgroundColor: colores.purpura,
     borderWidth: 2,
     borderColor: colores.verde,
     justifyContent: 'center',

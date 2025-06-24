@@ -6,6 +6,7 @@ const colores = {
   verde: '#5FD068',
   grisOscuro: '#403E43',
   gris: '#8E9196',
+  grisClaro: '#A5A8AD'
 };
 
 export default colores;
