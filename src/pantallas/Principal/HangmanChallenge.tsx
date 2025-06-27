@@ -78,6 +78,7 @@ const estilos = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 seccion: {
+  flex:1,
   marginBottom: 24,
   paddingLeft: 16,
   paddingVertical: 16,

@@ -5,6 +5,7 @@ import { EstandarButton } from '../../componentes/EstandarButton';
 import colores from '../../../assets/colors/colores';
 import { useRouter } from 'expo-router';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
+import NombreTitulo from '../../componentes/NombreTitulo';
 
 interface PantallaJuegoProps {
   nombreJugador: string;
@@ -17,6 +18,7 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
     Math.floor(Math.random() * contenidosAudiovisuales.length)
   );
   const [letrasAdivinadas, setLetrasAdivinadas] = useState<string[]>([]);
+  const [mostrarModalTitulo, setMostrarModalTitulo] = useState(false);
   const router = useRouter();
 
   const contenido = contenidosAudiovisuales[indiceContenido];
@@ -31,29 +33,28 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
     .join(' ');
 
   const adivinarTitulo = () => {
-    Alert.prompt(
-      'Adivinar título',
-      'Ingresa el título completo:',
-      (respuesta) => {
-        if (!respuesta) return;
-        const respuestaTrim = respuesta.trim().toUpperCase();
-        const tituloCorrecto = contenido.nombre.toUpperCase();
+    setMostrarModalTitulo(true);
+  };
 
-        if (respuestaTrim === tituloCorrecto) {
-          setPuntaje(puntaje + 1);
-          setLetrasAdivinadas([]);
-          if (indiceContenido + 1 < contenidosAudiovisuales.length) {
-            setIndiceContenido(indiceContenido + 1);
-          } else {
-            Alert.alert('¡Felicitaciones!', 'Terminaste todos los contenidos.');
-            router.replace('/');
-          }
-        } else {
-          setVidas(vidas - 1);
-          Alert.alert('Incorrecto', `La respuesta "${respuestaTrim}" es incorrecta.`);
-        }
+  const confirmarTitulo = (respuesta: string) => {
+    setMostrarModalTitulo(false);
+    const respuestaTrim = respuesta.trim().toUpperCase();
+    const tituloCorrecto = contenido.nombre.toUpperCase();
+
+    if (respuestaTrim === tituloCorrecto) {
+      setPuntaje((prev) => prev + 1);
+      setLetrasAdivinadas([]);
+      if (indiceContenido + 1 < contenidosAudiovisuales.length) {
+        setIndiceContenido(indiceContenido + 1);
+      } else {
+        Alert.alert('¡Felicitaciones!', 'Terminaste todos los contenidos.');
+        router.replace('/');
       }
-    );
+    } else {
+      setVidas((prev) => prev - 1);
+      Alert.alert('Incorrecto', `La respuesta "${respuestaTrim}" es incorrecta.`);
+      console.log("Respuesta incorrecta");
+    }
   };
 
   if (vidas <= 0) {
@@ -122,10 +123,16 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
           <Text style={styles.guionesTexto}>{mostrarPalabra}</Text>
         </View>
       </View>
+
+      {/* Modal para ingresar el título */}
+      <NombreTitulo
+        visible={mostrarModalTitulo}
+        onClose={() => setMostrarModalTitulo(false)}
+        onConfirm={confirmarTitulo}
+      />
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
