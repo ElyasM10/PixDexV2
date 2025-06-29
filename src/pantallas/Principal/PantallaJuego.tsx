@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Alert, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { EstandarButton } from '../../componentes/EstandarButton';
@@ -6,6 +6,7 @@ import colores from '../../../assets/colors/colores';
 import { useRouter } from 'expo-router';
 import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
 import NombreTitulo from '../../componentes/NombreTitulo';
+import EstandarSnackbar from '../../componentes/EstandarSnackbar';
 
 interface PantallaJuegoProps {
   nombreJugador: string;
@@ -19,10 +20,13 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
   );
   const [letrasAdivinadas, setLetrasAdivinadas] = useState<string[]>([]);
   const [mostrarModalTitulo, setMostrarModalTitulo] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState('');
+  const [mensajeFinalMostrado, setMensajeFinalMostrado] = useState(false);
   const router = useRouter();
 
   const contenido = contenidosAudiovisuales[indiceContenido];
-  console.log('Contenido actual en juego:', contenido.nombre);
+  console.log("Contenido en juego: ",contenido.nombre);
 
   const mostrarPalabra = contenido.nombre
     .toUpperCase()
@@ -46,35 +50,38 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
       setLetrasAdivinadas([]);
       if (indiceContenido + 1 < contenidosAudiovisuales.length) {
         setIndiceContenido(indiceContenido + 1);
+        setMessage("¡Adivinaste! Cambiando de título...");
+        setVisible(true);
       } else {
-        Alert.alert('¡Felicitaciones!', 'Terminaste todos los contenidos.');
+        setMessage('¡Felicitaciones! Terminaste todos los títulos.');
+        setVisible(true);
         router.replace('/');
       }
     } else {
       setVidas((prev) => prev - 1);
-      Alert.alert('Incorrecto', `La respuesta "${respuestaTrim}" es incorrecta.`);
-      console.log("Respuesta incorrecta");
+      setMessage('Respuesta incorrecta.');
+      setVisible(true);
     }
   };
 
-  if (vidas <= 0) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.finTexto}>¡Juego terminado!</Text>
-        <Text style={styles.finTexto}>Tu puntaje: {puntaje}</Text>
-        <EstandarButton
-          titulo="Volver al inicio"
-          onPress={() => router.replace('/')}
-          estiloBoton={styles.botonGuess}
-          estiloTexto={styles.textoBotonGuess}
-        />
-      </View>
-    );
+useEffect(() => {
+  if (vidas === 0 && !mensajeFinalMostrado) {
+    setMessage(`Te has quedado sin vidas. Tu puntaje es: ${puntaje}`);
+    setVisible(true);
+    setMensajeFinalMostrado(true);
+
+    const timeoutId = setTimeout(() => {
+      router.replace('/');
+    }, 3000); // 3000 ms = 3 segundos ,uso el timeout para mostrar el snackbar sino va directo al home
+
+    // limpiar timeout si el componente se desmonta antes
+    return () => clearTimeout(timeoutId);
   }
+}, [vidas]);
 
   return (
     <View style={styles.container}>
-      {/* EXIT y corazones */}
+      {/* Barra superior */}
       <View style={styles.topBar}>
         <EstandarButton
           titulo="SALIR"
@@ -95,7 +102,7 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
       </View>
 
       <View style={styles.seccion}>
-        {/* Botones GUESS */}
+        {/* Botones */}
         <View style={styles.botonesGuess}>
           <EstandarButton
             titulo="ADIVINAR TITULO"
@@ -111,24 +118,31 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
           />
         </View>
 
-        {/* Imagen del contenido */}
+        {/* Imagen */}
         <Image
           source={{ uri: contenido.imageUrl }}
           style={styles.imagenContenido}
           resizeMode="contain"
         />
 
-        {/* Palabra con guiones o letras adivinadas */}
+        {/* Palabra adivinada */}
         <View style={styles.guionesContainer}>
           <Text style={styles.guionesTexto}>{mostrarPalabra}</Text>
         </View>
       </View>
 
-      {/* Modal para ingresar el título */}
+      {/* Modal de adivinanza */}
       <NombreTitulo
         visible={mostrarModalTitulo}
         onClose={() => setMostrarModalTitulo(false)}
         onConfirm={confirmarTitulo}
+      />
+
+      {/* Snackbar */}
+      <EstandarSnackbar
+        visible={visible}
+        setVisible={setVisible}
+        message={message}
       />
     </View>
   );
