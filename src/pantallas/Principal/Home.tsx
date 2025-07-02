@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text,ScrollView , FlatList, Image,StatusBar, TouchableOpacity,
-} from 'react-native';
+import {View,Text, ScrollView, FlatList,Image,  StatusBar,TouchableOpacity,} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import Navbar from '../../componentes/Navbar';
 import estilosHome from './estilos/estilosHome';
 import Colores from '../../../assets/colors/colores';
-import Etiqueta from '../../componentes/Etiqueta';
 import { IContenidoAudiovisual } from '../../data/contenidosAudiovisuales';
 import { useData } from '../../contexto/DataContext';
+import ListaGeneros from '../../componentes/ListaGeneros'; 
 
 const Tarjeta = ({ contenido }: { contenido: IContenidoAudiovisual }) => {
   const router = useRouter();
-
-  const { generos } = useData();
-  const nombresGeneros = contenido.generos
-    .map((idGenero) => {
-      const generoObj = generos.find((g) => g.id === idGenero);
-      return generoObj ? generoObj.nombre.charAt(0).toUpperCase() + generoObj.nombre.slice(1) : null;
-    })
-    .filter(Boolean) as string[];
 
   const handlePress = () => {
     const id = contenido.id.toString();
@@ -35,11 +26,7 @@ const Tarjeta = ({ contenido }: { contenido: IContenidoAudiovisual }) => {
         </View>
       </View>
       <Text style={estilosHome.titulo}>{contenido.nombre}</Text>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 5 }}>
-        {nombresGeneros.map((nombreGenero) => (
-          <Etiqueta key={nombreGenero} texto={nombreGenero} estiloContenedor={{ marginBottom: 4 }} />
-        ))}
-      </View>
+      <ListaGeneros generosIds={contenido.generos} />
     </TouchableOpacity>
   );
 };

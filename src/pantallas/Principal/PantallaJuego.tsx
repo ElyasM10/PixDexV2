@@ -13,7 +13,7 @@ interface PantallaJuegoProps {
 }
 
 export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
-  const { contenidos, cargando } = useData(); // uso del contexto
+  const { contenidos, cargando } = useData(); 
   const [vidas, setVidas] = useState(5);
   const [puntaje, setPuntaje] = useState(0);
   const [indiceContenido, setIndiceContenido] = useState(0);

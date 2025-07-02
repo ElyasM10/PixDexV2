@@ -24,7 +24,7 @@ export default function HangmanChallenge() {
 
   return (
     <View style={estilos.contenedor}>
-      {/* Botón VOLVER */}
+     
       <EstandarButton
         titulo="VOLVER"
         icono="arrow-left"
@@ -34,7 +34,6 @@ export default function HangmanChallenge() {
         onPress={() => router.back()}
       />
 
-      {/* Sección título + descripción + botón jugar */}
       <View style={estilos.seccion}>
         <Text style={estilos.titulo}>
           <Text style={estilos.ahorcado}>Desafío del ahorcado</Text>
@@ -46,7 +45,6 @@ export default function HangmanChallenge() {
           Tenés 5 vidas. ¿Podés lograr la mejor puntuación?
         </Text>
 
-  {/* Botón COMENZAR JUEGO */}
        <EstandarButton
           titulo="Comenzar Juego"
           onPress={handlePress}
@@ -54,7 +52,7 @@ export default function HangmanChallenge() {
           estiloTexto={estilos.textoBotonComenzar}
         />
 
-      {/* Modal para ingresar nombre del jugador */}
+     
           <ModalNombreJugador
         visible={mostrarModal}
         onClose={() => setMostrarModal(false)}

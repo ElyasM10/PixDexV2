@@ -5,13 +5,14 @@ import estilosDetalle from './estilos/estiosDetalle';
 import Colores from '../../../assets/colors/colores';
 import EstandarButton from '../../componentes/EstandarButton';
 import Etiqueta from '../../componentes/Etiqueta';
+import ListaGeneros from '../../componentes/ListaGeneros';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useData } from '../../contexto/DataContext';
 
 const Detalle: React.FC = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams(); 
-  const { contenidos, generos, tipos } = useData();
+  const { contenidos, tipos } = useData();
   const contenido = contenidos.find(c => c.id === Number(id));
 
   if (!contenido) {
@@ -23,13 +24,6 @@ const Detalle: React.FC = () => {
   }
 
   const tipo = tipos.find(t => t.id === contenido.tipoId)?.singular;
-
-  const nombresGeneros = contenido.generos
-    .map((idGenero) => {
-      const generoObj = generos.find(g => g.id === idGenero);
-      return generoObj ? generoObj.nombre.charAt(0).toUpperCase() + generoObj.nombre.slice(1) : null;
-    })
-    .filter(Boolean) as string[];
 
   return (
     <SafeAreaView
@@ -71,15 +65,7 @@ const Detalle: React.FC = () => {
           <Text style={estilosDetalle.descripcion}>{contenido.descripcion}</Text>
 
           <Text style={estilosDetalle.subtitulo}>Géneros</Text>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 5 }}>
-            {nombresGeneros.map((nombreGenero) => (
-              <Etiqueta
-                key={nombreGenero}
-                texto={nombreGenero}
-                estiloContenedor={{ marginRight: 6, marginBottom: 6 }}
-              />
-            ))}
-          </View>
+          <ListaGeneros generosIds={contenido.generos} />
         </View>
       </ScrollView>
     </SafeAreaView>
