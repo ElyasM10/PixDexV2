@@ -4,20 +4,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { EstandarButton } from '../../componentes/EstandarButton';
 import colores from '../../../assets/colors/colores';
 import { useRouter } from 'expo-router';
-import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
 import NombreTitulo from '../../componentes/NombreTitulo';
 import EstandarSnackbar from '../../componentes/EstandarSnackbar';
+import { useData } from '../../contexto/DataContext';
 
 interface PantallaJuegoProps {
   nombreJugador: string;
 }
 
 export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
+  const { contenidos, cargando } = useData(); // uso del contexto
   const [vidas, setVidas] = useState(5);
   const [puntaje, setPuntaje] = useState(0);
-  const [indiceContenido, setIndiceContenido] = useState(() =>
-    Math.floor(Math.random() * contenidosAudiovisuales.length)
-  );
+  const [indiceContenido, setIndiceContenido] = useState(0);
   const [letrasAdivinadas, setLetrasAdivinadas] = useState<string[]>([]);
   const [mostrarModalTitulo, setMostrarModalTitulo] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -25,8 +24,30 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
   const [mensajeFinalMostrado, setMensajeFinalMostrado] = useState(false);
   const router = useRouter();
 
-  const contenido = contenidosAudiovisuales[indiceContenido];
-  console.log("Contenido en juego: ",contenido.nombre);
+  // Elegimos un indice aleatorio cuando los contenidos esten disponibles
+  useEffect(() => {
+    if (!cargando && contenidos.length > 0) {
+      setIndiceContenido(Math.floor(Math.random() * contenidos.length));
+    }
+  }, [cargando, contenidos]);
+
+  if (cargando) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ color: 'white' }}>Cargando contenidos...</Text>
+      </View>
+    );
+  }
+
+  const contenido = contenidos[indiceContenido];
+  console.log("Contenido en juego: "+contenido.nombre);
+  if (!contenido) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ color: 'white' }}>No hay contenidos para mostrar.</Text>
+      </View>
+    );
+  }
 
   const mostrarPalabra = contenido.nombre
     .toUpperCase()
@@ -48,14 +69,14 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
     if (respuestaTrim === tituloCorrecto) {
       setPuntaje((prev) => prev + 1);
       setLetrasAdivinadas([]);
-      if (indiceContenido + 1 < contenidosAudiovisuales.length) {
+      if (indiceContenido + 1 < contenidos.length) {
         setIndiceContenido(indiceContenido + 1);
         setMessage("¡Adivinaste! Cambiando de título...");
         setVisible(true);
       } else {
         setMessage('¡Felicitaciones! Terminaste todos los títulos.');
         setVisible(true);
-        router.replace('/');
+        setTimeout(() => router.replace('/'), 3000);
       }
     } else {
       setVidas((prev) => prev - 1);
@@ -64,20 +85,19 @@ export default function PantallaJuego({ nombreJugador }: PantallaJuegoProps) {
     }
   };
 
-useEffect(() => {
-  if (vidas === 0 && !mensajeFinalMostrado) {
-    setMessage(`Te has quedado sin vidas. Tu puntaje es: ${puntaje}`);
-    setVisible(true);
-    setMensajeFinalMostrado(true);
+  useEffect(() => {
+    if (vidas === 0 && !mensajeFinalMostrado) {
+      setMessage(`Te has quedado sin vidas. Tu puntaje es: ${puntaje}`);
+      setVisible(true);
+      setMensajeFinalMostrado(true);
 
-    const timeoutId = setTimeout(() => {
-      router.replace('/');
-    }, 3000); // 3000 ms = 3 segundos ,uso el timeout para mostrar el snackbar sino va directo al home
+      const timeoutId = setTimeout(() => {
+        router.replace('/');
+      }, 3000);
 
-    // limpiar timeout si el componente se desmonta antes
-    return () => clearTimeout(timeoutId);
-  }
-}, [vidas]);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [vidas]);
 
   return (
     <View style={styles.container}>

@@ -2,21 +2,17 @@ import React from 'react';
 import { View, Text, ScrollView, Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import estilosDetalle from './estilos/estiosDetalle';
-import { contenidosAudiovisuales } from '../../data/contenidosAudiovisuales';
-import { obtenerTipo } from '../../utils/contenidoUtils';
-import EstandarButton from '../../componentes/EstandarButton';
 import Colores from '../../../assets/colors/colores';
-import { useRouter } from 'expo-router';
+import EstandarButton from '../../componentes/EstandarButton';
 import Etiqueta from '../../componentes/Etiqueta';
-import { generosContenidoAudiovisual } from '../../data/generosContenidoAudiovisual';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useData } from '../../contexto/DataContext';
 
-type DetalleProps = {
-  id: string;
-};
-
-const Detalle: React.FC<DetalleProps> = ({ id }) => {
+const Detalle: React.FC = () => {
   const router = useRouter();
-  const contenido = contenidosAudiovisuales.find(c => c.id === Number(id));
+  const { id } = useLocalSearchParams(); 
+  const { contenidos, generos, tipos } = useData();
+  const contenido = contenidos.find(c => c.id === Number(id));
 
   if (!contenido) {
     return (
@@ -26,12 +22,11 @@ const Detalle: React.FC<DetalleProps> = ({ id }) => {
     );
   }
 
-  const tipo = obtenerTipo(contenido.tipoId);
+  const tipo = tipos.find(t => t.id === contenido.tipoId)?.singular;
 
-  // Convertir los ids de generos a nombres con mayúscula inicial
   const nombresGeneros = contenido.generos
     .map((idGenero) => {
-      const generoObj = generosContenidoAudiovisual.find(g => g.id === idGenero);
+      const generoObj = generos.find(g => g.id === idGenero);
       return generoObj ? generoObj.nombre.charAt(0).toUpperCase() + generoObj.nombre.slice(1) : null;
     })
     .filter(Boolean) as string[];
@@ -64,20 +59,25 @@ const Detalle: React.FC<DetalleProps> = ({ id }) => {
           </View>
 
           <Text style={estilosDetalle.titulo}>{contenido.nombre}</Text>
-                {tipo && (
-        <Etiqueta
-          texto={tipo}
-          estiloContenedor={[estilosDetalle.etiquetaTipo, { marginBottom: 10 }]}
-          estiloTexto={estilosDetalle.textoTipo}
-        />
-      )}
+
+          {tipo && (
+            <Etiqueta
+              texto={tipo}
+              estiloContenedor={[estilosDetalle.etiquetaTipo, { marginBottom: 10 }]}
+              estiloTexto={estilosDetalle.textoTipo}
+            />
+          )}
+
           <Text style={estilosDetalle.descripcion}>{contenido.descripcion}</Text>
 
           <Text style={estilosDetalle.subtitulo}>Géneros</Text>
-
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 5 }}>
             {nombresGeneros.map((nombreGenero) => (
-              <Etiqueta key={nombreGenero} texto={nombreGenero} estiloContenedor={{ marginRight: 6, marginBottom: 6 }} />
+              <Etiqueta
+                key={nombreGenero}
+                texto={nombreGenero}
+                estiloContenedor={{ marginRight: 6, marginBottom: 6 }}
+              />
             ))}
           </View>
         </View>

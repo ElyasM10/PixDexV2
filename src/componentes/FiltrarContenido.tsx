@@ -11,8 +11,7 @@ import EstandarModal from './EstandarModal';
 import colores from '../../assets/colors/colores';
 import EstandarButton from './EstandarButton';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
-import { generosContenidoAudiovisual } from '../data/generosContenidoAudiovisual';
-import { tiposContenidoAudiovisual } from '../data/tiposContenidoAudiovisual';
+import { useData } from '../contexto/DataContext';
 
 interface Props {
   visible: boolean;
@@ -20,16 +19,18 @@ interface Props {
   onApply: (tipos: string[], generos: string[]) => void;
 }
 
-const contentTypes = tiposContenidoAudiovisual.map(
-  (t) => t.plural.charAt(0).toUpperCase() + t.plural.slice(1)
-);
-const genres = generosContenidoAudiovisual
-  .map((g) => g.nombre.charAt(0).toUpperCase() + g.nombre.slice(1))
-  .sort((a, b) => a.localeCompare(b));
+const capitalize = (text: string) =>
+  text.charAt(0).toUpperCase() + text.slice(1);
 
 const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
+  const { tipos, generos } = useData();
   const [tiposSeleccionados, setTiposSeleccionados] = useState<string[]>([]);
   const [generosSeleccionados, setGenerosSeleccionados] = useState<string[]>([]);
+
+  const contentTypes = tipos.map((t) => capitalize(t.plural));
+  const genres = generos
+    .map((g) => capitalize(g.nombre))
+    .sort((a, b) => a.localeCompare(b));
 
   const toggleSeleccion = (
     item: string,
@@ -46,7 +47,6 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
   return (
     <EstandarModal visible={visible} onClose={onClose}>
       <View style={styles.modalContainer}>
-  
         {/* Header fijo */}
         <View style={styles.headerContainer}>
           <View style={styles.titleContainer}>
@@ -58,8 +58,8 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
             </TouchableOpacity>
           </View>
         </View>
-  
-        {/* Content Types fijo */}
+
+        {/* Content Types */}
         <Text style={styles.sectionTitle}>Tipos de Contenido</Text>
         {contentTypes.map((tipo) => (
           <View key={tipo} style={styles.checkboxRow}>
@@ -72,9 +72,9 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
             <Text style={styles.checkboxLabel}>{tipo}</Text>
           </View>
         ))}
-  
+
         {/* Scroll solo para Géneros */}
-        <Text style={styles.sectionTitle}>Generos</Text>
+        <Text style={styles.sectionTitle}>Géneros</Text>
         <ScrollView
           style={{ maxHeight: 250 }}
           showsVerticalScrollIndicator={true}
@@ -85,7 +85,9 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
               <View key={genero} style={styles.genreItem}>
                 <Checkbox
                   status={generosSeleccionados.includes(genero) ? 'checked' : 'unchecked'}
-                  onPress={() => toggleSeleccion(genero, setGenerosSeleccionados, generosSeleccionados)}
+                  onPress={() =>
+                    toggleSeleccion(genero, setGenerosSeleccionados, generosSeleccionados)
+                  }
                   color={colores.purpuraClaro}
                   uncheckedColor={colores.purpuraClaro}
                 />
@@ -94,8 +96,8 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
             ))}
           </View>
         </ScrollView>
-  
-        {/* Botones fijos abajo */}
+
+        {/* Botones abajo */}
         <View style={styles.buttonsContainer}>
           <EstandarButton
             titulo="CANCELAR"
@@ -103,9 +105,8 @@ const FiltrarContenido = ({ visible, onClose, onApply }: Props) => {
             estiloBoton={[styles.button, styles.cancelButton]}
             estiloTexto={styles.cancelText}
           />
-  
           <EstandarButton
-            titulo={"APLICAR\nFILTROS"}
+            titulo={'APLICAR\nFILTROS'}
             onPress={() => {
               onApply(tiposSeleccionados, generosSeleccionados);
               onClose();
